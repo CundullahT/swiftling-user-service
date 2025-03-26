@@ -1,0 +1,16 @@
+spring:
+  profiles:
+    #    active: dev
+    active: ${SWIFTLING_PROFILE}
+  config:
+    import: configserver:${spring.cloud.config.uri}
+  cloud:
+    config:
+      name: swiftling-phrase-service
+      uri: ${SWIFTLING_CONFIG_SERVICE}
+      fail-fast: true
+      retry:
+        max-attempts: 10
+        max-interval: 2000
+      #      profile: dev
+      profile: ${SWIFTLING_PROFILE}
