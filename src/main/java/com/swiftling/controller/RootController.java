@@ -60,6 +60,33 @@ public class RootController {
     }
 
     @RolesAllowed("Root")
+    @GetMapping("/admin/read/{username}")
+    @Operation(summary = "Read an admin user by username.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User is successfully retrieved.",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseWrapper.class),
+                            examples = @ExampleObject(value = SwaggerExamples.ADMIN_USER_GET_RESPONSE_SINGLE_EXAMPLE))),
+            @ApiResponse(responseCode = "404", description = "User does not exist.",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionWrapper.class),
+                            examples = @ExampleObject(value = SwaggerExamples.USER_NOT_FOUND_RESPONSE_EXAMPLE))),
+            @ApiResponse(responseCode = "403", description = "Access is denied",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionWrapper.class),
+                            examples = @ExampleObject(value = SwaggerExamples.ACCESS_DENIED_FORBIDDEN_RESPONSE_EXAMPLE)))})
+    public ResponseEntity<ResponseWrapper> getAdminByUsername(@PathVariable("username") String username) {
+
+        UserDTO foundAdmin = rootService.readAdminByUsername(username);
+
+        return ResponseEntity
+                .ok(ResponseWrapper.builder()
+                        .statusCode(HttpStatus.OK)
+                        .success(true)
+                        .message("User is successfully retrieved.")
+                        .data(foundAdmin)
+                        .build());
+
+    }
+
+    @RolesAllowed("Root")
     @PostMapping("/user/create")
     @Operation(summary = "Create a regular user.",
             requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
@@ -88,6 +115,33 @@ public class RootController {
                 .message("User is successfully created.")
                 .data(createdUser)
                 .build());
+
+    }
+
+    @RolesAllowed("Root")
+    @GetMapping("/user/read/{username}")
+    @Operation(summary = "Read a regular user by username.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User is successfully retrieved.",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseWrapper.class),
+                            examples = @ExampleObject(value = SwaggerExamples.REGULAR_USER_GET_RESPONSE_SINGLE_EXAMPLE))),
+            @ApiResponse(responseCode = "404", description = "User does not exist.",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionWrapper.class),
+                            examples = @ExampleObject(value = SwaggerExamples.USER_NOT_FOUND_RESPONSE_EXAMPLE))),
+            @ApiResponse(responseCode = "403", description = "Access is denied",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionWrapper.class),
+                            examples = @ExampleObject(value = SwaggerExamples.ACCESS_DENIED_FORBIDDEN_RESPONSE_EXAMPLE)))})
+    public ResponseEntity<ResponseWrapper> getUserByUsername(@PathVariable("username") String username) {
+
+        UserDTO foundUser = rootService.readUserByUsername(username);
+
+        return ResponseEntity
+                .ok(ResponseWrapper.builder()
+                        .statusCode(HttpStatus.OK)
+                        .success(true)
+                        .message("User is successfully retrieved.")
+                        .data(foundUser)
+                        .build());
 
     }
 
