@@ -147,6 +147,58 @@ public class RootController {
     }
 
     @RolesAllowed("Root")
+    @PutMapping("/admin/enable/{username}")
+    @Operation(summary = "Enable an admin user by username.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "The admin user is successfully enabled.",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseWrapper.class),
+                            examples = @ExampleObject(value = SwaggerExamples.ADMIN_USER_ENABLE_RESPONSE_EXAMPLE))),
+            @ApiResponse(responseCode = "404", description = "User does not exist.",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionWrapper.class),
+                            examples = @ExampleObject(value = SwaggerExamples.USER_NOT_FOUND_RESPONSE_EXAMPLE))),
+            @ApiResponse(responseCode = "403", description = "Access is denied",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionWrapper.class),
+                            examples = @ExampleObject(value = SwaggerExamples.ACCESS_DENIED_FORBIDDEN_RESPONSE_EXAMPLE)))})
+    public ResponseEntity<ResponseWrapper> enableAdmin(@PathVariable("username") String username) {
+
+        rootService.enableAdmin(username);
+
+        return ResponseEntity
+                .ok(ResponseWrapper.builder()
+                        .statusCode(HttpStatus.OK)
+                        .success(true)
+                        .message("The admin user is successfully enabled.")
+                        .build());
+
+    }
+
+    @RolesAllowed("Root")
+    @PutMapping("/admin/disable/{username}")
+    @Operation(summary = "Disable an admin user by username.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "The admin user is successfully disabled.",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseWrapper.class),
+                            examples = @ExampleObject(value = SwaggerExamples.ADMIN_USER_DISABLE_RESPONSE_EXAMPLE))),
+            @ApiResponse(responseCode = "404", description = "User does not exist.",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionWrapper.class),
+                            examples = @ExampleObject(value = SwaggerExamples.USER_NOT_FOUND_RESPONSE_EXAMPLE))),
+            @ApiResponse(responseCode = "403", description = "Access is denied",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionWrapper.class),
+                            examples = @ExampleObject(value = SwaggerExamples.ACCESS_DENIED_FORBIDDEN_RESPONSE_EXAMPLE)))})
+    public ResponseEntity<ResponseWrapper> disableAdmin(@PathVariable("username") String username) {
+
+        rootService.enableAdmin(username);
+
+        return ResponseEntity
+                .ok(ResponseWrapper.builder()
+                        .statusCode(HttpStatus.OK)
+                        .success(true)
+                        .message("The admin user is successfully disabled.")
+                        .build());
+
+    }
+
+    @RolesAllowed("Root")
     @PostMapping("/user/create")
     @Operation(summary = "Create a regular user.",
             requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
@@ -258,6 +310,58 @@ public class RootController {
                         .success(true)
                         .message("The regular user is successfully updated.")
                         .data(updatedUser)
+                        .build());
+
+    }
+
+    @RolesAllowed("Root")
+    @PutMapping("/user/enable/{username}")
+    @Operation(summary = "Enable a regular user by username.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "The regular user is successfully enabled.",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseWrapper.class),
+                            examples = @ExampleObject(value = SwaggerExamples.REGULAR_USER_ENABLE_RESPONSE_EXAMPLE))),
+            @ApiResponse(responseCode = "404", description = "User does not exist.",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionWrapper.class),
+                            examples = @ExampleObject(value = SwaggerExamples.USER_NOT_FOUND_RESPONSE_EXAMPLE))),
+            @ApiResponse(responseCode = "403", description = "Access is denied",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionWrapper.class),
+                            examples = @ExampleObject(value = SwaggerExamples.ACCESS_DENIED_FORBIDDEN_RESPONSE_EXAMPLE)))})
+    public ResponseEntity<ResponseWrapper> enableUser(@PathVariable("username") String username) {
+
+        rootService.enableUser(username);
+
+        return ResponseEntity
+                .ok(ResponseWrapper.builder()
+                        .statusCode(HttpStatus.OK)
+                        .success(true)
+                        .message("The regular user is successfully enabled.")
+                        .build());
+
+    }
+
+    @RolesAllowed("Root")
+    @PutMapping("/user/disable/{username}")
+    @Operation(summary = "Disable a regular user by username.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "The regular user is successfully disabled.",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseWrapper.class),
+                            examples = @ExampleObject(value = SwaggerExamples.REGULAR_USER_DISABLE_RESPONSE_EXAMPLE))),
+            @ApiResponse(responseCode = "404", description = "User does not exist.",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionWrapper.class),
+                            examples = @ExampleObject(value = SwaggerExamples.USER_NOT_FOUND_RESPONSE_EXAMPLE))),
+            @ApiResponse(responseCode = "403", description = "Access is denied",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionWrapper.class),
+                            examples = @ExampleObject(value = SwaggerExamples.ACCESS_DENIED_FORBIDDEN_RESPONSE_EXAMPLE)))})
+    public ResponseEntity<ResponseWrapper> disableUser(@PathVariable("username") String username) {
+
+        rootService.enableUser(username);
+
+        return ResponseEntity
+                .ok(ResponseWrapper.builder()
+                        .statusCode(HttpStatus.OK)
+                        .success(true)
+                        .message("The regular user is successfully disabled.")
                         .build());
 
     }
