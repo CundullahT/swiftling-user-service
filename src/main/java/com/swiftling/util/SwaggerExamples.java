@@ -3,7 +3,7 @@ package com.swiftling.util;
 public class SwaggerExamples {
 
     private SwaggerExamples() {}
-    //Done
+    
     public static final String USER_CREATE_REQUEST_EXAMPLE = "{\n" +
             "  \"firstname\": \"John\",\n" +
             "  \"lastname\": \"Doe\",\n" +
@@ -11,13 +11,13 @@ public class SwaggerExamples {
             "  \"email\": \"john.doe@example.com\",\n" +
             "  \"password\": \"Pa$$w0rd\"\n" +
             "}";
-    //Done
+    
     public static final String USER_UPDATE_REQUEST_EXAMPLE = "{\n" +
             "  \"firstname\": \"John\",\n" +
             "  \"lastname\": \"Doe\",\n" +
             "  \"email\": \"john.doe@example.com\"\n" +
             "}";
-    //Done
+    
     public static final String ADMIN_USER_CREATE_RESPONSE_EXAMPLE = "{\n" +
             "  \"success\": true,\n" +
             "  \"statusCode\": \"CREATED\",\n" +
@@ -34,7 +34,7 @@ public class SwaggerExamples {
             "  }\n" +
             "}";
 
-    //Done
+    
     public static final String REGULAR_USER_CREATE_RESPONSE_EXAMPLE = "{\n" +
             "  \"success\": true,\n" +
             "  \"statusCode\": \"CREATED\",\n" +
@@ -50,7 +50,7 @@ public class SwaggerExamples {
             "    }\n" +
             "  }\n" +
             "}";
-    //Done
+    
     public static final String ADMIN_USER_UPDATE_RESPONSE_EXAMPLE = "{\n" +
             "  \"success\": true,\n" +
             "  \"statusCode\": \"OK\",\n" +
@@ -66,7 +66,7 @@ public class SwaggerExamples {
             "    }\n" +
             "  }\n" +
             "}";
-    //Done
+    
     public static final String REGULAR_USER_UPDATE_RESPONSE_EXAMPLE = "{\n" +
             "  \"success\": true,\n" +
             "  \"statusCode\": \"OK\",\n" +
@@ -83,35 +83,49 @@ public class SwaggerExamples {
             "  }\n" +
             "}";
 
-    //Done
+    
     public static final String ADMIN_USER_ENABLE_RESPONSE_EXAMPLE = "{\n" +
             "  \"success\": true,\n" +
             "  \"statusCode\": \"OK\",\n" +
             "  \"message\": \"The admin user is successfully enabled.\"\n" +
             "}";
 
-    //Done
+    
     public static final String REGULAR_USER_ENABLE_RESPONSE_EXAMPLE = "{\n" +
             "  \"success\": true,\n" +
             "  \"statusCode\": \"OK\",\n" +
             "  \"message\": \"The regular user is successfully enabled.\"\n" +
             "}";
 
-    //Done
+    
     public static final String ADMIN_USER_DISABLE_RESPONSE_EXAMPLE = "{\n" +
             "  \"success\": true,\n" +
             "  \"statusCode\": \"OK\",\n" +
             "  \"message\": \"The admin user is successfully disabled.\"\n" +
             "}";
 
-    //Done
+    
     public static final String REGULAR_USER_DISABLE_RESPONSE_EXAMPLE = "{\n" +
             "  \"success\": true,\n" +
             "  \"statusCode\": \"OK\",\n" +
             "  \"message\": \"The regular user is successfully disabled.\"\n" +
             "}";
 
-    //Done
+    
+    public static final String ADMIN_USER_DELETE_RESPONSE_EXAMPLE = "{\n" +
+            "  \"success\": true,\n" +
+            "  \"statusCode\": \"OK\",\n" +
+            "  \"message\": \"The admin user is successfully deleted.\"\n" +
+            "}";
+    
+    
+    public static final String REGULAR_USER_DELETE_RESPONSE_EXAMPLE = "{\n" +
+            "  \"success\": true,\n" +
+            "  \"statusCode\": \"OK\",\n" +
+            "  \"message\": \"The regular user is successfully deleted.\"\n" +
+            "}";
+
+    
     public static final String ADMIN_USER_GET_RESPONSE_SINGLE_EXAMPLE = "{\n" +
             "  \"success\": true,\n" +
             "  \"statusCode\": \"OK\",\n" +
@@ -127,7 +141,7 @@ public class SwaggerExamples {
             "    }\n" +
             "  }\n" +
             "}";
-    //Done
+    
     public static final String REGULAR_USER_GET_RESPONSE_SINGLE_EXAMPLE = "{\n" +
             "  \"success\": true,\n" +
             "  \"statusCode\": \"OK\",\n" +
@@ -143,7 +157,7 @@ public class SwaggerExamples {
             "    }\n" +
             "  }\n" +
             "}";
-    //Done
+    
     public static final String ADMIN_USER_GET_RESPONSE_LIST_EXAMPLE = "{\n" +
             "  \"success\": true,\n" +
             "  \"statusCode\": \"OK\",\n" +
@@ -171,7 +185,7 @@ public class SwaggerExamples {
             "    }\n" +
             "  ]\n" +
             "}";
-    //Done
+    
     public static final String REGULAR_USER_GET_RESPONSE_LIST_EXAMPLE = "{\n" +
             "  \"success\": true,\n" +
             "  \"statusCode\": \"OK\",\n" +
@@ -200,28 +214,28 @@ public class SwaggerExamples {
             "  ]\n" +
             "}";
 
-    //Done
+    
     public static final String ACCESS_DENIED_FORBIDDEN_RESPONSE_EXAMPLE = "{\n" +
             "  \"success\": false,\n" +
             "  \"message\": \"Access is denied\",\n" +
             "  \"httpStatus\": \"FORBIDDEN\",\n" +
             "  \"localDateTime\": \"2024-01-01T00:00:00.0000000\"\n" +
             "}";
-    //Done
+    
     public static final String USER_ALREADY_EXISTS_RESPONSE_EXAMPLE = "{\n" +
             "  \"success\": false,\n" +
             "  \"message\": \"User already exists.\",\n" +
             "  \"httpStatus\": \"CONFLICT\",\n" +
             "  \"localDateTime\": \"2024-01-01T00:00:00.0000000\"\n" +
             "}";
-    //Done
+    
     public static final String USER_NOT_FOUND_RESPONSE_EXAMPLE = "{\n" +
             "  \"success\": false,\n" +
             "  \"message\": \"User does not exist.\",\n" +
             "  \"httpStatus\": \"NOT_FOUND\",\n" +
             "  \"localDateTime\": \"2024-01-01T00:00:00.0000000\"\n" +
             "}";
-    //Done
+    
     public static final String USER_NOT_DELETED_RESPONSE_EXAMPLE = "{\n" +
             "  \"success\": false,\n" +
             "  \"message\": \"User can not be deleted.\",\n" +
@@ -229,7 +243,7 @@ public class SwaggerExamples {
             "  \"localDateTime\": \"2024-01-01T00:00:00.0000000\"\n" +
             "}";
 
-    //Done
+    
     public static final String VALIDATION_EXCEPTION_RESPONSE_EXAMPLE = "{\n" +
             "  \"success\": false,\n" +
             "  \"message\": \"Invalid Input(s)\",\n" +
