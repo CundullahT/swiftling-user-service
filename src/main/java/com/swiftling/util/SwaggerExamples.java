@@ -11,13 +11,11 @@ public class SwaggerExamples {
             "  \"email\": \"john.doe@example.com\",\n" +
             "  \"password\": \"Pa$$w0rd\"\n" +
             "}";
-
+    //Done
     public static final String USER_UPDATE_REQUEST_EXAMPLE = "{\n" +
             "  \"firstname\": \"John\",\n" +
             "  \"lastname\": \"Doe\",\n" +
-            "  \"email\": \"john.doe@example.com\",\n" +
-            "  \"password\": \"Pa$$w0rd\",\n" +
-            "  \"confirmPassword\": \"Pa$$w0rd\"\n" +
+            "  \"email\": \"john.doe@example.com\"\n" +
             "}";
     //Done
     public static final String ADMIN_USER_CREATE_RESPONSE_EXAMPLE = "{\n" +
@@ -52,38 +50,36 @@ public class SwaggerExamples {
             "    }\n" +
             "  }\n" +
             "}";
-
+    //Done
     public static final String ADMIN_USER_UPDATE_RESPONSE_EXAMPLE = "{\n" +
             "  \"success\": true,\n" +
             "  \"statusCode\": \"OK\",\n" +
-            "  \"message\": \"User is successfully updated.\",\n" +
+            "  \"message\": \"The admin user is successfully updated.\",\n" +
             "  \"data\": {\n" +
-            "    \"firstName\": \"John\",\n" +
-            "    \"lastName\": \"Doe\",\n" +
-            "    \"userName\": \"john.doe@example.com\",\n" +
-            "    \"phone\": \"1234567890\",\n" +
+            "    \"firstname\": \"John\",\n" +
+            "    \"lastname\": \"Doe\",\n" +
+            "    \"username\": \"john.doe\",\n" +
+            "    \"email\": \"john.doe@example.com\",\n" +
             "    \"enabled\": true,\n" +
             "    \"role\": {\n" +
-            "      \"description\": \"Employee\"\n" +
-            "    },\n" +
-            "    \"gender\": \"MALE\"\n" +
+            "      \"description\": \"Admin\"\n" +
+            "    }\n" +
             "  }\n" +
             "}";
-
+    //Done
     public static final String REGULAR_USER_UPDATE_RESPONSE_EXAMPLE = "{\n" +
             "  \"success\": true,\n" +
             "  \"statusCode\": \"OK\",\n" +
-            "  \"message\": \"User is successfully updated.\",\n" +
+            "  \"message\": \"The regular user is successfully updated.\",\n" +
             "  \"data\": {\n" +
-            "    \"firstName\": \"John\",\n" +
-            "    \"lastName\": \"Doe\",\n" +
-            "    \"userName\": \"john.doe@example.com\",\n" +
-            "    \"phone\": \"1234567890\",\n" +
+            "    \"firstname\": \"John\",\n" +
+            "    \"lastname\": \"Doe\",\n" +
+            "    \"username\": \"john.doe\",\n" +
+            "    \"email\": \"john.doe@example.com\",\n" +
             "    \"enabled\": true,\n" +
             "    \"role\": {\n" +
-            "      \"description\": \"Employee\"\n" +
-            "    },\n" +
-            "    \"gender\": \"MALE\"\n" +
+            "      \"description\": \"User\"\n" +
+            "    }\n" +
             "  }\n" +
             "}";
     //Done
