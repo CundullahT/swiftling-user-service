@@ -82,6 +82,35 @@ public class SwaggerExamples {
             "    }\n" +
             "  }\n" +
             "}";
+
+    //Done
+    public static final String ADMIN_USER_ENABLE_RESPONSE_EXAMPLE = "{\n" +
+            "  \"success\": true,\n" +
+            "  \"statusCode\": \"OK\",\n" +
+            "  \"message\": \"The admin user is successfully enabled.\"\n" +
+            "}";
+
+    //Done
+    public static final String REGULAR_USER_ENABLE_RESPONSE_EXAMPLE = "{\n" +
+            "  \"success\": true,\n" +
+            "  \"statusCode\": \"OK\",\n" +
+            "  \"message\": \"The regular user is successfully enabled.\"\n" +
+            "}";
+
+    //Done
+    public static final String ADMIN_USER_DISABLE_RESPONSE_EXAMPLE = "{\n" +
+            "  \"success\": true,\n" +
+            "  \"statusCode\": \"OK\",\n" +
+            "  \"message\": \"The admin user is successfully disabled.\"\n" +
+            "}";
+
+    //Done
+    public static final String REGULAR_USER_DISABLE_RESPONSE_EXAMPLE = "{\n" +
+            "  \"success\": true,\n" +
+            "  \"statusCode\": \"OK\",\n" +
+            "  \"message\": \"The regular user is successfully disabled.\"\n" +
+            "}";
+
     //Done
     public static final String ADMIN_USER_GET_RESPONSE_SINGLE_EXAMPLE = "{\n" +
             "  \"success\": true,\n" +
