@@ -147,7 +147,7 @@ public class RootController {
     }
 
     @RolesAllowed("Root")
-    @PutMapping("/admin/enable/{username}")
+    @PatchMapping("/admin/enable/{username}")
     @Operation(summary = "Enable an admin user by username.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "The admin user is successfully enabled.",
@@ -173,7 +173,7 @@ public class RootController {
     }
 
     @RolesAllowed("Root")
-    @PutMapping("/admin/disable/{username}")
+    @PatchMapping("/admin/disable/{username}")
     @Operation(summary = "Disable an admin user by username.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "The admin user is successfully disabled.",
@@ -344,7 +344,7 @@ public class RootController {
     }
 
     @RolesAllowed("Root")
-    @GetMapping("/user/enable/{username}")
+    @PatchMapping("/user/enable/{username}")
     @Operation(summary = "Enable a regular user by username.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "The regular user is successfully enabled.",
@@ -370,7 +370,7 @@ public class RootController {
     }
 
     @RolesAllowed("Root")
-    @PutMapping("/user/disable/{username}")
+    @PatchMapping("/user/disable/{username}")
     @Operation(summary = "Disable a regular user by username.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "The regular user is successfully disabled.",
