@@ -9,8 +9,7 @@ public class SwaggerExamples {
             "  \"lastname\": \"Doe\",\n" +
             "  \"username\": \"john.doe\",\n" +
             "  \"email\": \"john.doe@example.com\",\n" +
-            "  \"password\": \"Pa$$w0rd\",\n" +
-            "  \"confirmPassword\": \"Pa$$w0rd\"\n" +
+            "  \"password\": \"Pa$$w0rd\"\n" +
             "}";
 
     public static final String USER_UPDATE_REQUEST_EXAMPLE = "{\n" +
@@ -33,8 +32,7 @@ public class SwaggerExamples {
             "    \"enabled\": true,\n" +
             "    \"role\": {\n" +
             "      \"description\": \"Admin\"\n" +
-            "    },\n" +
-            "    \"gender\": \"MALE\"\n" +
+            "    }\n" +
             "  }\n" +
             "}";
 
@@ -51,8 +49,7 @@ public class SwaggerExamples {
             "    \"enabled\": true,\n" +
             "    \"role\": {\n" +
             "      \"description\": \"User\"\n" +
-            "    },\n" +
-            "    \"gender\": \"MALE\"\n" +
+            "    }\n" +
             "  }\n" +
             "}";
 
@@ -89,38 +86,36 @@ public class SwaggerExamples {
             "    \"gender\": \"MALE\"\n" +
             "  }\n" +
             "}";
-
+    //Done
     public static final String ADMIN_USER_GET_RESPONSE_SINGLE_EXAMPLE = "{\n" +
             "  \"success\": true,\n" +
             "  \"statusCode\": \"OK\",\n" +
             "  \"message\": \"User is successfully retrieved.\",\n" +
             "  \"data\": {\n" +
-            "    \"firstName\": \"John\",\n" +
-            "    \"lastName\": \"Doe\",\n" +
-            "    \"userName\": \"john.doe@example.com\",\n" +
-            "    \"phone\": \"1234567890\",\n" +
+            "    \"firstname\": \"John\",\n" +
+            "    \"lastname\": \"Doe\",\n" +
+            "    \"username\": \"john.doe\",\n" +
+            "    \"email\": \"john.doe@example.com\",\n" +
             "    \"enabled\": true,\n" +
             "    \"role\": {\n" +
-            "      \"description\": \"Employee\"\n" +
-            "    },\n" +
-            "    \"gender\": \"MALE\"\n" +
+            "      \"description\": \"Admin\"\n" +
+            "    }\n" +
             "  }\n" +
             "}";
-
+    //Done
     public static final String REGULAR_USER_GET_RESPONSE_SINGLE_EXAMPLE = "{\n" +
             "  \"success\": true,\n" +
             "  \"statusCode\": \"OK\",\n" +
             "  \"message\": \"User is successfully retrieved.\",\n" +
             "  \"data\": {\n" +
-            "    \"firstName\": \"John\",\n" +
-            "    \"lastName\": \"Doe\",\n" +
-            "    \"userName\": \"john.doe@example.com\",\n" +
-            "    \"phone\": \"1234567890\",\n" +
+            "    \"firstname\": \"John\",\n" +
+            "    \"lastname\": \"Doe\",\n" +
+            "    \"username\": \"john.doe\",\n" +
+            "    \"email\": \"john.doe@example.com\",\n" +
             "    \"enabled\": true,\n" +
             "    \"role\": {\n" +
-            "      \"description\": \"Employee\"\n" +
-            "    },\n" +
-            "    \"gender\": \"MALE\"\n" +
+            "      \"description\": \"User\"\n" +
+            "    }\n" +
             "  }\n" +
             "}";
 
@@ -244,7 +239,7 @@ public class SwaggerExamples {
             "    {\n" +
             "      \"errorField\": \"userName\",\n" +
             "      \"rejectedValue\": \"john.doe.123456@email.com\",\n" +
-            "      \"reason\": \"Username length should be min 3, max 16.\"\n" +
+            "      \"reason\": \"Username must be between 6 and 24 characters long.\"\n" +
             "    }\n" +
             "  ]\n" +
             "}";
