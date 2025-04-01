@@ -16,6 +16,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin("http://localhost:8762")
 @RequestMapping("/api/v1/root")
@@ -34,7 +36,7 @@ public class RootController {
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserDTO.class),
                             examples = @ExampleObject(value = SwaggerExamples.USER_CREATE_REQUEST_EXAMPLE))))
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "User is successfully created.",
+            @ApiResponse(responseCode = "201", description = "The admin user is successfully created.",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseWrapper.class),
                             examples = @ExampleObject(value = SwaggerExamples.ADMIN_USER_CREATE_RESPONSE_EXAMPLE))),
             @ApiResponse(responseCode = "409", description = "User already exists.",
@@ -53,7 +55,7 @@ public class RootController {
         return ResponseEntity.status(HttpStatus.CREATED).body(ResponseWrapper.builder()
                 .statusCode(HttpStatus.CREATED)
                 .success(true)
-                .message("User is successfully created.")
+                .message("The admin user is successfully created.")
                 .data(createdAdmin)
                 .build());
 
@@ -63,7 +65,7 @@ public class RootController {
     @GetMapping("/admin/read/{username}")
     @Operation(summary = "Read an admin user by username.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "User is successfully retrieved.",
+            @ApiResponse(responseCode = "200", description = "The admin user is successfully retrieved.",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseWrapper.class),
                             examples = @ExampleObject(value = SwaggerExamples.ADMIN_USER_GET_RESPONSE_SINGLE_EXAMPLE))),
             @ApiResponse(responseCode = "404", description = "User does not exist.",
@@ -80,8 +82,32 @@ public class RootController {
                 .ok(ResponseWrapper.builder()
                         .statusCode(HttpStatus.OK)
                         .success(true)
-                        .message("User is successfully retrieved.")
+                        .message("The admin user is successfully retrieved.")
                         .data(foundAdmin)
+                        .build());
+
+    }
+
+    @RolesAllowed("Root")
+    @GetMapping("/admin/read/all")
+    @Operation(summary = "Read all admin users.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "All the admin users are successfully retrieved.",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseWrapper.class),
+                            examples = @ExampleObject(value = SwaggerExamples.ADMIN_USER_GET_RESPONSE_LIST_EXAMPLE))),
+            @ApiResponse(responseCode = "403", description = "Access is denied",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionWrapper.class),
+                            examples = @ExampleObject(value = SwaggerExamples.ACCESS_DENIED_FORBIDDEN_RESPONSE_EXAMPLE)))})
+    public ResponseEntity<ResponseWrapper> getAllAdmins() {
+
+        List<UserDTO> foundAdmins = rootService.readAllAdmins();
+
+        return ResponseEntity
+                .ok(ResponseWrapper.builder()
+                        .success(true)
+                        .statusCode(HttpStatus.OK)
+                        .message("All the admin users are successfully retrieved.")
+                        .data(foundAdmins)
                         .build());
 
     }
@@ -93,7 +119,7 @@ public class RootController {
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserDTO.class),
                             examples = @ExampleObject(value = SwaggerExamples.USER_CREATE_REQUEST_EXAMPLE))))
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "User is successfully created.",
+            @ApiResponse(responseCode = "201", description = "The regular user is successfully created.",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseWrapper.class),
                             examples = @ExampleObject(value = SwaggerExamples.REGULAR_USER_CREATE_RESPONSE_EXAMPLE))),
             @ApiResponse(responseCode = "409", description = "User already exists.",
@@ -112,7 +138,7 @@ public class RootController {
         return ResponseEntity.status(HttpStatus.CREATED).body(ResponseWrapper.builder()
                 .statusCode(HttpStatus.CREATED)
                 .success(true)
-                .message("User is successfully created.")
+                .message("The regular user is successfully created.")
                 .data(createdUser)
                 .build());
 
@@ -122,7 +148,7 @@ public class RootController {
     @GetMapping("/user/read/{username}")
     @Operation(summary = "Read a regular user by username.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "User is successfully retrieved.",
+            @ApiResponse(responseCode = "200", description = "The regular user is successfully retrieved.",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseWrapper.class),
                             examples = @ExampleObject(value = SwaggerExamples.REGULAR_USER_GET_RESPONSE_SINGLE_EXAMPLE))),
             @ApiResponse(responseCode = "404", description = "User does not exist.",
@@ -139,8 +165,32 @@ public class RootController {
                 .ok(ResponseWrapper.builder()
                         .statusCode(HttpStatus.OK)
                         .success(true)
-                        .message("User is successfully retrieved.")
+                        .message("The regular user is successfully retrieved.")
                         .data(foundUser)
+                        .build());
+
+    }
+
+    @RolesAllowed("Root")
+    @GetMapping("/user/read/all")
+    @Operation(summary = "Read all regular users.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "All the regular users are successfully retrieved.",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseWrapper.class),
+                            examples = @ExampleObject(value = SwaggerExamples.REGULAR_USER_GET_RESPONSE_LIST_EXAMPLE))),
+            @ApiResponse(responseCode = "403", description = "Access is denied",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionWrapper.class),
+                            examples = @ExampleObject(value = SwaggerExamples.ACCESS_DENIED_FORBIDDEN_RESPONSE_EXAMPLE)))})
+    public ResponseEntity<ResponseWrapper> getAllUsers() {
+
+        List<UserDTO> foundUsers = rootService.readAllUsers();
+
+        return ResponseEntity
+                .ok(ResponseWrapper.builder()
+                        .success(true)
+                        .statusCode(HttpStatus.OK)
+                        .message("All the regular users are successfully retrieved.")
+                        .data(foundUsers)
                         .build());
 
     }
