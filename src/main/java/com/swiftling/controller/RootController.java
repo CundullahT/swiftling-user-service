@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.annotation.security.RolesAllowed;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -48,7 +49,7 @@ public class RootController {
             @ApiResponse(responseCode = "403", description = "Access is denied",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionWrapper.class),
                             examples = @ExampleObject(value = SwaggerExamples.ACCESS_DENIED_FORBIDDEN_RESPONSE_EXAMPLE)))})
-    public ResponseEntity<ResponseWrapper> adminCreate(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<ResponseWrapper> createAdmin(@Valid @RequestBody UserDTO userDTO) {
 
         UserDTO createdAdmin = rootService.createAdmin(userDTO);
 
@@ -104,10 +105,43 @@ public class RootController {
 
         return ResponseEntity
                 .ok(ResponseWrapper.builder()
-                        .success(true)
                         .statusCode(HttpStatus.OK)
+                        .success(true)
                         .message("All the admin users are successfully retrieved.")
                         .data(foundAdmins)
+                        .build());
+
+    }
+
+    @RolesAllowed("Root")
+    @PutMapping("/admin/update/{username}")
+    @Operation(summary = "Update an admin user by username.",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserDTO.class),
+                            examples = @ExampleObject(value = SwaggerExamples.USER_UPDATE_REQUEST_EXAMPLE))))
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "The admin user is successfully updated.",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseWrapper.class),
+                            examples = @ExampleObject(value = SwaggerExamples.ADMIN_USER_UPDATE_RESPONSE_EXAMPLE))),
+            @ApiResponse(responseCode = "404", description = "User does not exist.",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionWrapper.class),
+                            examples = @ExampleObject(value = SwaggerExamples.USER_NOT_FOUND_RESPONSE_EXAMPLE))),
+            @ApiResponse(responseCode = "400", description = "Invalid Input(s)",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionWrapper.class),
+                            examples = @ExampleObject(value = SwaggerExamples.VALIDATION_EXCEPTION_RESPONSE_EXAMPLE))),
+            @ApiResponse(responseCode = "403", description = "Access is denied",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionWrapper.class),
+                            examples = @ExampleObject(value = SwaggerExamples.ACCESS_DENIED_FORBIDDEN_RESPONSE_EXAMPLE)))})
+    public ResponseEntity<ResponseWrapper> updateAdmin(@PathVariable("username") String username, @Valid @RequestBody UserDTO userDTO) {
+
+        UserDTO updatedAdmin = rootService.updateAdmin(username, userDTO);
+
+        return ResponseEntity
+                .ok(ResponseWrapper.builder()
+                        .statusCode(HttpStatus.OK)
+                        .success(true)
+                        .message("The admin user is successfully updated.")
+                        .data(updatedAdmin)
                         .build());
 
     }
@@ -131,7 +165,7 @@ public class RootController {
             @ApiResponse(responseCode = "403", description = "Access is denied",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionWrapper.class),
                             examples = @ExampleObject(value = SwaggerExamples.ACCESS_DENIED_FORBIDDEN_RESPONSE_EXAMPLE)))})
-    public ResponseEntity<ResponseWrapper> userCreate(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<ResponseWrapper> createUser(@Valid @RequestBody UserDTO userDTO) {
 
         UserDTO createdUser = rootService.createUser(userDTO);
 
@@ -187,10 +221,43 @@ public class RootController {
 
         return ResponseEntity
                 .ok(ResponseWrapper.builder()
-                        .success(true)
                         .statusCode(HttpStatus.OK)
+                        .success(true)
                         .message("All the regular users are successfully retrieved.")
                         .data(foundUsers)
+                        .build());
+
+    }
+
+    @RolesAllowed("Root")
+    @PutMapping("/user/update/{username}")
+    @Operation(summary = "Update a regular user by username.",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserDTO.class),
+                            examples = @ExampleObject(value = SwaggerExamples.USER_UPDATE_REQUEST_EXAMPLE))))
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "The regular user is successfully updated.",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseWrapper.class),
+                            examples = @ExampleObject(value = SwaggerExamples.REGULAR_USER_UPDATE_RESPONSE_EXAMPLE))),
+            @ApiResponse(responseCode = "404", description = "User does not exist.",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionWrapper.class),
+                            examples = @ExampleObject(value = SwaggerExamples.USER_NOT_FOUND_RESPONSE_EXAMPLE))),
+            @ApiResponse(responseCode = "400", description = "Invalid Input(s)",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionWrapper.class),
+                            examples = @ExampleObject(value = SwaggerExamples.VALIDATION_EXCEPTION_RESPONSE_EXAMPLE))),
+            @ApiResponse(responseCode = "403", description = "Access is denied",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionWrapper.class),
+                            examples = @ExampleObject(value = SwaggerExamples.ACCESS_DENIED_FORBIDDEN_RESPONSE_EXAMPLE)))})
+    public ResponseEntity<ResponseWrapper> updateUser(@PathVariable("username") String username, @Valid @RequestBody UserDTO userDTO) {
+
+        UserDTO updatedUser = rootService.updateUser(username, userDTO);
+
+        return ResponseEntity
+                .ok(ResponseWrapper.builder()
+                        .statusCode(HttpStatus.OK)
+                        .success(true)
+                        .message("The regular user is successfully updated.")
+                        .data(updatedUser)
                         .build());
 
     }
