@@ -30,13 +30,13 @@ public class RootServiceImpl implements RootService {
     }
 
     @Override
-    public UserDTO enableAdmin(String username, UserDTO userDTO) {
-        return null;
+    public void enableAdmin(String username, UserDTO userDTO) {
+
     }
 
     @Override
-    public UserDTO disableAdmin(String username, UserDTO userDTO) {
-        return null;
+    public void disableAdmin(String username, UserDTO userDTO) {
+
     }
 
     @Override
@@ -65,13 +65,13 @@ public class RootServiceImpl implements RootService {
     }
 
     @Override
-    public UserDTO enableUser(String username, UserDTO userDTO) {
-        return null;
+    public void enableUser(String username, UserDTO userDTO) {
+
     }
 
     @Override
-    public UserDTO disableUser(String username, UserDTO userDTO) {
-        return null;
+    public void disableUser(String username, UserDTO userDTO) {
+
     }
 
     @Override
