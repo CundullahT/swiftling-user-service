@@ -187,7 +187,7 @@ public class RootController {
                             examples = @ExampleObject(value = SwaggerExamples.ACCESS_DENIED_FORBIDDEN_RESPONSE_EXAMPLE)))})
     public ResponseEntity<ResponseWrapper> disableAdmin(@PathVariable("username") String username) {
 
-        rootService.enableAdmin(username);
+        rootService.disableAdmin(username);
 
         return ResponseEntity
                 .ok(ResponseWrapper.builder()
@@ -384,7 +384,7 @@ public class RootController {
                             examples = @ExampleObject(value = SwaggerExamples.ACCESS_DENIED_FORBIDDEN_RESPONSE_EXAMPLE)))})
     public ResponseEntity<ResponseWrapper> disableUser(@PathVariable("username") String username) {
 
-        rootService.enableUser(username);
+        rootService.disableUser(username);
 
         return ResponseEntity
                 .ok(ResponseWrapper.builder()
