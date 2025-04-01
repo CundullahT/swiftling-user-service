@@ -22,7 +22,7 @@ public class UserDTO {
     private String lastname;
 
     @NotBlank(message = "Username is a required field.")
-    @Size(max = 24, min = 2, message = "Username must be between 2 and 24 characters long.")
+    @Size(max = 24, min = 6, message = "Username must be between 6 and 24 characters long.")
     private String username;
 
     @NotBlank(message = "Email is a required field.")
@@ -35,28 +35,8 @@ public class UserDTO {
             "and 1 digit.")
     private String password;
 
-    @NotBlank(message = "Passwords should match.")
-    private String confirmPassword;
-
     private Status status;
 
     private String role;
-
-    public void setPassword(String password) {
-        this.password = password;
-        checkConfirmPassword();
-    }
-
-    public void setConfirmPassword(String confirmPassword) {
-        this.confirmPassword = confirmPassword;
-        checkConfirmPassword();
-    }
-
-    private void checkConfirmPassword() {
-        if (password == null || confirmPassword == null) return;
-        else if (!password.equals(confirmPassword)) {
-            confirmPassword = null;
-        }
-    }
 
 }
