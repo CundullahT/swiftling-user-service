@@ -6,7 +6,7 @@ spring:
     import: configserver:${spring.cloud.config.uri}
   cloud:
     config:
-      name: swiftling-phrase-service
+      name: swiftling-user-service
       uri: ${SWIFTLING_CONFIG_SERVICE}
       fail-fast: true
       retry:
