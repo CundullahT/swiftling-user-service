@@ -23,7 +23,7 @@ public class SwaggerExamples {
     public static final String ADMIN_USER_CREATE_RESPONSE_EXAMPLE = "{\n" +
             "  \"success\": true,\n" +
             "  \"statusCode\": \"CREATED\",\n" +
-            "  \"message\": \"User is successfully created.\",\n" +
+            "  \"message\": \"The admin user is successfully created.\",\n" +
             "  \"data\": {\n" +
             "    \"firstname\": \"John\",\n" +
             "    \"lastname\": \"Doe\",\n" +
@@ -40,7 +40,7 @@ public class SwaggerExamples {
     public static final String REGULAR_USER_CREATE_RESPONSE_EXAMPLE = "{\n" +
             "  \"success\": true,\n" +
             "  \"statusCode\": \"CREATED\",\n" +
-            "  \"message\": \"User is successfully created.\",\n" +
+            "  \"message\": \"The regular user is successfully created.\",\n" +
             "  \"data\": {\n" +
             "    \"firstname\": \"John\",\n" +
             "    \"lastname\": \"Doe\",\n" +
@@ -90,7 +90,7 @@ public class SwaggerExamples {
     public static final String ADMIN_USER_GET_RESPONSE_SINGLE_EXAMPLE = "{\n" +
             "  \"success\": true,\n" +
             "  \"statusCode\": \"OK\",\n" +
-            "  \"message\": \"User is successfully retrieved.\",\n" +
+            "  \"message\": \"The admin user is successfully retrieved.\",\n" +
             "  \"data\": {\n" +
             "    \"firstname\": \"John\",\n" +
             "    \"lastname\": \"Doe\",\n" +
@@ -106,7 +106,7 @@ public class SwaggerExamples {
     public static final String REGULAR_USER_GET_RESPONSE_SINGLE_EXAMPLE = "{\n" +
             "  \"success\": true,\n" +
             "  \"statusCode\": \"OK\",\n" +
-            "  \"message\": \"User is successfully retrieved.\",\n" +
+            "  \"message\": \"The regular user is successfully retrieved.\",\n" +
             "  \"data\": {\n" +
             "    \"firstname\": \"John\",\n" +
             "    \"lastname\": \"Doe\",\n" +
@@ -122,7 +122,7 @@ public class SwaggerExamples {
     public static final String ADMIN_USER_GET_RESPONSE_LIST_EXAMPLE = "{\n" +
             "  \"success\": true,\n" +
             "  \"statusCode\": \"OK\",\n" +
-            "  \"message\": \"Users are successfully retrieved.\",\n" +
+            "  \"message\": \"All the admin users are successfully retrieved.\",\n" +
             "  \"data\": [\n" +
             "    {\n" +
             "      \"firstname\": \"John\",\n" +
@@ -150,7 +150,7 @@ public class SwaggerExamples {
     public static final String REGULAR_USER_GET_RESPONSE_LIST_EXAMPLE = "{\n" +
             "  \"success\": true,\n" +
             "  \"statusCode\": \"OK\",\n" +
-            "  \"message\": \"Users are successfully retrieved.\",\n" +
+            "  \"message\": \"All the regular users are successfully retrieved.\",\n" +
             "  \"data\": [\n" +
             "    {\n" +
             "      \"firstname\": \"John\",\n" +
