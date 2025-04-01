@@ -20,7 +20,7 @@ public class RootServiceImpl implements RootService {
     }
 
     @Override
-    public List<UserDTO> readAllAdmin() {
+    public List<UserDTO> readAllAdmins() {
         return List.of();
     }
 
@@ -55,7 +55,7 @@ public class RootServiceImpl implements RootService {
     }
 
     @Override
-    public List<UserDTO> readAllUser() {
+    public List<UserDTO> readAllUsers() {
         return List.of();
     }
 

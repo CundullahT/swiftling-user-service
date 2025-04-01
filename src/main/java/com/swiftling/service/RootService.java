@@ -8,7 +8,7 @@ public interface RootService {
 
     UserDTO createAdmin(UserDTO userDTO);
     UserDTO readAdminByUsername(String username);
-    List<UserDTO> readAllAdmin();
+    List<UserDTO> readAllAdmins();
     UserDTO updateAdmin(String username, UserDTO userDTO);
     UserDTO enableAdmin(String username, UserDTO userDTO);
     UserDTO disableAdmin(String username, UserDTO userDTO);
@@ -16,7 +16,7 @@ public interface RootService {
 
     UserDTO createUser(UserDTO userDTO);
     UserDTO readUserByUsername(String username);
-    List<UserDTO> readAllUser();
+    List<UserDTO> readAllUsers();
     UserDTO updateUser(String username, UserDTO userDTO);
     UserDTO enableUser(String username, UserDTO userDTO);
     UserDTO disableUser(String username, UserDTO userDTO);
