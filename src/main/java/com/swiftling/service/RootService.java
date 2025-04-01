@@ -7,7 +7,7 @@ import java.util.List;
 public interface RootService {
 
     UserDTO createAdmin(UserDTO userDTO);
-    UserDTO readAdmin(String username);
+    UserDTO readAdminByUsername(String username);
     List<UserDTO> readAllAdmin();
     UserDTO updateAdmin(String username, UserDTO userDTO);
     UserDTO enableAdmin(String username, UserDTO userDTO);
@@ -15,7 +15,7 @@ public interface RootService {
     void deleteAdmin(String username);
 
     UserDTO createUser(UserDTO userDTO);
-    UserDTO readUser(String username);
+    UserDTO readUserByUsername(String username);
     List<UserDTO> readAllUser();
     UserDTO updateUser(String username, UserDTO userDTO);
     UserDTO enableUser(String username, UserDTO userDTO);

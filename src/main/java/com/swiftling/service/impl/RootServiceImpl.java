@@ -15,7 +15,7 @@ public class RootServiceImpl implements RootService {
     }
 
     @Override
-    public UserDTO readAdmin(String username) {
+    public UserDTO readAdminByUsername(String username) {
         return null;
     }
 
@@ -50,7 +50,7 @@ public class RootServiceImpl implements RootService {
     }
 
     @Override
-    public UserDTO readUser(String username) {
+    public UserDTO readUserByUsername(String username) {
         return null;
     }
 
