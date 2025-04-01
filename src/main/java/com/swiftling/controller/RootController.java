@@ -199,6 +199,35 @@ public class RootController {
     }
 
     @RolesAllowed("Root")
+    @DeleteMapping("/admin/delete/{username}")
+    @Operation(summary = "Delete an admin user by username.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "The admin user is successfully deleted.",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseWrapper.class),
+                            examples = @ExampleObject(value = SwaggerExamples.ADMIN_USER_DELETE_RESPONSE_EXAMPLE))),
+            @ApiResponse(responseCode = "404", description = "User does not exist.",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionWrapper.class),
+                            examples = @ExampleObject(value = SwaggerExamples.USER_NOT_FOUND_RESPONSE_EXAMPLE))),
+            @ApiResponse(responseCode = "409", description = "User can not be deleted.",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionWrapper.class),
+                            examples = @ExampleObject(value = SwaggerExamples.USER_NOT_DELETED_RESPONSE_EXAMPLE))),
+            @ApiResponse(responseCode = "403", description = "Access is denied",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionWrapper.class),
+                            examples = @ExampleObject(value = SwaggerExamples.ACCESS_DENIED_FORBIDDEN_RESPONSE_EXAMPLE)))})
+    public ResponseEntity<ResponseWrapper> deleteAdmin(@PathVariable("username") String username) {
+
+        rootService.deleteAdmin(username);
+
+        return ResponseEntity
+                .ok(ResponseWrapper.builder()
+                        .statusCode(HttpStatus.OK)
+                        .success(true)
+                        .message("The admin user is successfully deleted.")
+                        .build());
+
+    }
+
+    @RolesAllowed("Root")
     @PostMapping("/user/create")
     @Operation(summary = "Create a regular user.",
             requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
@@ -315,7 +344,7 @@ public class RootController {
     }
 
     @RolesAllowed("Root")
-    @PutMapping("/user/enable/{username}")
+    @GetMapping("/user/enable/{username}")
     @Operation(summary = "Enable a regular user by username.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "The regular user is successfully enabled.",
@@ -362,6 +391,35 @@ public class RootController {
                         .statusCode(HttpStatus.OK)
                         .success(true)
                         .message("The regular user is successfully disabled.")
+                        .build());
+
+    }
+
+    @RolesAllowed("Root")
+    @DeleteMapping("/user/delete/{username}")
+    @Operation(summary = "Delete a regular user by username.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "The regular user is successfully deleted.",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseWrapper.class),
+                            examples = @ExampleObject(value = SwaggerExamples.REGULAR_USER_DELETE_RESPONSE_EXAMPLE))),
+            @ApiResponse(responseCode = "404", description = "User does not exist.",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionWrapper.class),
+                            examples = @ExampleObject(value = SwaggerExamples.USER_NOT_FOUND_RESPONSE_EXAMPLE))),
+            @ApiResponse(responseCode = "409", description = "User can not be deleted.",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionWrapper.class),
+                            examples = @ExampleObject(value = SwaggerExamples.USER_NOT_DELETED_RESPONSE_EXAMPLE))),
+            @ApiResponse(responseCode = "403", description = "Access is denied",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionWrapper.class),
+                            examples = @ExampleObject(value = SwaggerExamples.ACCESS_DENIED_FORBIDDEN_RESPONSE_EXAMPLE)))})
+    public ResponseEntity<ResponseWrapper> deleteUser(@PathVariable("username") String username) {
+
+        rootService.deleteUser(username);
+
+        return ResponseEntity
+                .ok(ResponseWrapper.builder()
+                        .statusCode(HttpStatus.OK)
+                        .success(true)
+                        .message("The regular user is successfully deleted.")
                         .build());
 
     }
