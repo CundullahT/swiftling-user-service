@@ -56,6 +56,11 @@ public class UserServiceApplication {
         defaultProperties.put("info.application.name", "swiftling-user-service");
         defaultProperties.put("info.application.description", "Swiftling App's User Service");
 
+        String frontendUrl = env.equalsIgnoreCase("prod")
+                ? "https://" + hostOrIp
+                : "http://" + hostOrIp + ":5000";
+        defaultProperties.put("app.frontend.url", frontendUrl);
+
         app.setDefaultProperties(defaultProperties);
 
         app.run(args);

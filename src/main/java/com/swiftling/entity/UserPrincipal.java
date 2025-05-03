@@ -1,27 +1,22 @@
 package com.swiftling.entity;
 
-import com.swiftling.enums.Status;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
+import java.util.Collections;
 
 public class UserPrincipal implements UserDetails {
 
-    private User user;
+    private Account user;
 
-    public UserPrincipal(User user) {
+    public UserPrincipal(Account user) {
         this.user = user;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<GrantedAuthority> authorityList = new ArrayList<>();
-        authorityList.add(new SimpleGrantedAuthority(this.user.getRole()));
-        return authorityList;
+        return Collections.emptyList();
     }
 
     @Override
@@ -31,7 +26,7 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.user.getUsername();
+        return this.user.getEmail();
     }
 
     @Override
@@ -51,7 +46,7 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return this.user.getStatus() == Status.ENABLED;
+        return user.getIsEnabled() && !user.getIsDeleted();
     }
 
     public Long getId() {
