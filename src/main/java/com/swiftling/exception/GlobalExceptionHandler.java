@@ -69,6 +69,18 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.GONE).body(exceptionWrapper);
     }
 
+    @ExceptionHandler(PasswordIncorrectException.class)
+    public ResponseEntity<ExceptionWrapper> handlePasswordIncorrectException(Throwable exception) {
+        log.error(exception.getMessage());
+        ExceptionWrapper exceptionWrapper = ExceptionWrapper.builder()
+                .success(false)
+                .message(exception.getMessage())
+                .httpStatus(HttpStatus.BAD_REQUEST)
+                .localDateTime(LocalDateTime.now())
+                .build();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exceptionWrapper);
+    }
+
     @ExceptionHandler(UserAlreadyEnabledException.class)
     public ResponseEntity<ExceptionWrapper> handleUserAlreadyEnabledException(Throwable exception) {
         log.error(exception.getMessage());

@@ -12,4 +12,6 @@ public interface AccountService {
 
     void resetPassword(String token, String newPassword);
 
+    void changePassword(String currentPassword, String newPassword);
+
 }

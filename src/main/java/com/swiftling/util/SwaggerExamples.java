@@ -12,13 +12,24 @@ public class SwaggerExamples {
             "}";
 
     public static final String RESET_PASSWORD_REQUEST_EXAMPLE = "{\n" +
-            "  \"newPassword\": \"Pa$$w0rd\"\n" +
+            "  \"newPassword\": \"Pa$$w0rd123\"\n" +
+            "}";
+
+    public static final String CHANGE_PASSWORD_REQUEST_EXAMPLE = "{\n" +
+            "  \"currentPassword\": \"Pa$$w0rd123\"\n" +
+            "  \"newPassword\": \"Pa$$w0rd123\"\n" +
             "}";
 
     public static final String RESET_PASSWORD_RESPONSE_EXAMPLE = "{\n" +
             "  \"success\": true,\n" +
             "  \"statusCode\": \"OK\",\n" +
             "  \"message\": \"Password has been reset successfully.\"\n" +
+            "}";
+
+    public static final String CHANGE_PASSWORD_RESPONSE_EXAMPLE = "{\n" +
+            "  \"success\": true,\n" +
+            "  \"statusCode\": \"OK\",\n" +
+            "  \"message\": \"Password has been changed successfully.\"\n" +
             "}";
 
     public static final String USER_UPDATE_REQUEST_EXAMPLE = "{\n" +

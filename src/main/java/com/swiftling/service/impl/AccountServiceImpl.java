@@ -119,4 +119,27 @@ public class AccountServiceImpl implements AccountService {
 
     }
 
+    @Override
+    public void changePassword(String currentPassword, String newPassword) {
+
+        String loggedInUserName = keycloakService.getLoggedInUserName();
+
+        Account account = accountRepository.findByEmail(loggedInUserName)
+                .orElseThrow(() -> new UserNotFoundException("The user account does not exist: " + loggedInUserName));
+
+        if (!passwordEncoder.matches(currentPassword, account.getPassword())) {
+            throw new PasswordIncorrectException("The given current password is incorrect.");
+        } else {
+
+            keycloakService.resetUserPassword(loggedInUserName, newPassword);
+
+            account.setPassword(passwordEncoder.encode(newPassword));
+            accountRepository.save(account);
+
+            emailService.sendPasswordChangedEmail(loggedInUserName);
+
+        }
+
+    }
+
 }

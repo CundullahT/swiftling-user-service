@@ -1,6 +1,7 @@
 package com.swiftling.controller;
 
 import com.swiftling.dto.AccountDTO;
+import com.swiftling.dto.ChangePasswordRequestDTO;
 import com.swiftling.dto.ResetPasswordRequestDTO;
 import com.swiftling.dto.wrapper.ExceptionWrapper;
 import com.swiftling.dto.wrapper.ResponseWrapper;
@@ -120,12 +121,12 @@ public class AccountController {
     }
 
     @PostMapping("/reset-pass")
-    @Operation(summary = "Reset password using a valid reset token",
+    @Operation(summary = "Reset password using a valid reset token.",
             requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResetPasswordRequestDTO.class),
                             examples = @ExampleObject(value = SwaggerExamples.RESET_PASSWORD_REQUEST_EXAMPLE))))
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Password reset successfully",
+            @ApiResponse(responseCode = "200", description = "Password has been reset successfully.",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseWrapper.class),
                             examples = @ExampleObject(value = SwaggerExamples.RESET_PASSWORD_RESPONSE_EXAMPLE))),
             @ApiResponse(responseCode = "404", description = "The token does not exist.",
@@ -148,6 +149,32 @@ public class AccountController {
                 .statusCode(HttpStatus.OK)
                 .success(true)
                 .message("Password has been reset successfully.")
+                .build());
+    }
+
+    @PostMapping("/reset-pass")
+    @Operation(summary = "Change password.",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResetPasswordRequestDTO.class),
+                            examples = @ExampleObject(value = SwaggerExamples.CHANGE_PASSWORD_REQUEST_EXAMPLE))))
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Password has been changed successfully.",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseWrapper.class),
+                            examples = @ExampleObject(value = SwaggerExamples.CHANGE_PASSWORD_RESPONSE_EXAMPLE))),
+            @ApiResponse(responseCode = "404", description = "The user account does not exist: + sample@email.com",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionWrapper.class),
+                            examples = @ExampleObject(value = SwaggerExamples.USER_NOT_FOUND_RESPONSE_EXAMPLE))),
+            @ApiResponse(responseCode = "403", description = "Access is denied",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionWrapper.class),
+                            examples = @ExampleObject(value = SwaggerExamples.ACCESS_DENIED_FORBIDDEN_RESPONSE_EXAMPLE)))})
+    public ResponseEntity<ResponseWrapper> changePassword(@Valid @RequestBody ChangePasswordRequestDTO requestDTO) {
+
+        accountService.changePassword(requestDTO.getCurrentPassword(), requestDTO.getNewPassword());
+
+        return ResponseEntity.ok(ResponseWrapper.builder()
+                .statusCode(HttpStatus.OK)
+                .success(true)
+                .message("Password has been changed successfully.")
                 .build());
     }
 
