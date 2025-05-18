@@ -4,6 +4,7 @@ import com.swiftling.dto.AccountDTO;
 import com.swiftling.dto.UpdateAccountRequestDTO;
 import com.swiftling.entity.Account;
 import com.swiftling.entity.Token;
+import com.swiftling.enums.TokenType;
 import com.swiftling.exception.*;
 import com.swiftling.repository.AccountRepository;
 import com.swiftling.repository.TokenRepository;
@@ -65,7 +66,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public void enable(String token) {
 
-        Token existingToken = tokenRepository.findByToken(token)
+        Token existingToken = tokenRepository.findByTokenAndTokenType(token, TokenType.VERIFICATION)
                 .orElseThrow(() -> new TokenNotFoundException("The token does not exist."));
 
         if (existingToken.getExpiryDateTime().isBefore(LocalDateTime.now()) || existingToken.getIsDeleted()) {
@@ -102,7 +103,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public void resetPassword(String token, String newPassword) {
 
-        Token existingToken = tokenRepository.findByToken(token)
+        Token existingToken = tokenRepository.findByTokenAndTokenType(token, TokenType.RESET_PASS)
                 .orElseThrow(() -> new TokenNotFoundException("The token does not exist."));
 
         if (existingToken.getExpiryDateTime().isBefore(LocalDateTime.now()) || existingToken.getIsDeleted()) {
