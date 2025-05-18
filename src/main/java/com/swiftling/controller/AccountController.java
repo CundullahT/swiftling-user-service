@@ -152,7 +152,7 @@ public class AccountController {
                 .build());
     }
 
-    @PostMapping("/reset-pass")
+    @PostMapping("/change-pass")
     @Operation(summary = "Change password.",
             requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResetPasswordRequestDTO.class),
