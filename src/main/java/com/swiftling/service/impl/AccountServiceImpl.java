@@ -15,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Service
 public class AccountServiceImpl implements AccountService {
@@ -45,6 +46,7 @@ public class AccountServiceImpl implements AccountService {
 
         Account accountToSave = mapperUtil.convert(accountDTO, new Account());
 
+        accountToSave.setExternalId(UUID.randomUUID().toString());
         accountToSave.setIsDeleted(false);
         accountToSave.setIsEnabled(false);
 
@@ -159,9 +161,15 @@ public class AccountServiceImpl implements AccountService {
 
         String oldEmail = foundAccount.getEmail();
 
-        foundAccount.setEmail(requestDTO.getEmail());
-        foundAccount.setFirstName(requestDTO.getFirstName());
-        foundAccount.setLastName(requestDTO.getLastName());
+        if (requestDTO.getEmail() != null) {
+            foundAccount.setEmail(requestDTO.getEmail());
+        }
+        if (requestDTO.getFirstName() != null) {
+            foundAccount.setFirstName(requestDTO.getFirstName());
+        }
+        if (requestDTO.getLastName() != null) {
+            foundAccount.setLastName(requestDTO.getLastName());
+        }
 
         keycloakService.userUpdate(requestDTO);
 

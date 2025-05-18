@@ -13,6 +13,9 @@ import lombok.Setter;
 public class Account extends BaseEntity {
 
     @Column(nullable = false)
+    private String externalId;
+
+    @Column(nullable = false)
     private String firstName;
 
     @Column(nullable = false)
