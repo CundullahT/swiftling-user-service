@@ -11,6 +11,12 @@ public class SwaggerExamples {
             "  \"password\": \"Pa$$w0rd123\"\n" +
             "}";
 
+    public static final String USER_UPDATE_REQUEST_EXAMPLE = "{\n" +
+            "  \"firstname\": \"John\",\n" +
+            "  \"lastname\": \"Doe\",\n" +
+            "  \"email\": \"john.doe@example.com\",\n" +
+            "}";
+
     public static final String RESET_PASSWORD_REQUEST_EXAMPLE = "{\n" +
             "  \"newPassword\": \"Pa$$w0rd123\"\n" +
             "}";
@@ -31,12 +37,6 @@ public class SwaggerExamples {
             "  \"statusCode\": \"OK\",\n" +
             "  \"message\": \"Password has been changed successfully.\"\n" +
             "}";
-
-    public static final String USER_UPDATE_REQUEST_EXAMPLE = "{\n" +
-            "  \"firstname\": \"John\",\n" +
-            "  \"lastname\": \"Doe\",\n" +
-            "  \"email\": \"john.doe@example.com\"\n" +
-            "}";
     
     public static final String USER_CREATE_RESPONSE_EXAMPLE = "{\n" +
             "  \"success\": true,\n" +
@@ -53,7 +53,7 @@ public class SwaggerExamples {
             "    }\n" +
             "  }\n" +
             "}";
-    
+
     public static final String USER_UPDATE_RESPONSE_EXAMPLE = "{\n" +
             "  \"success\": true,\n" +
             "  \"statusCode\": \"OK\",\n" +
@@ -74,12 +74,6 @@ public class SwaggerExamples {
             "  \"success\": true,\n" +
             "  \"statusCode\": \"OK\",\n" +
             "  \"message\": \"The user account has been enabled successfully.\"\n" +
-            "}";
-    
-    public static final String USER_DELETE_RESPONSE_EXAMPLE = "{\n" +
-            "  \"success\": true,\n" +
-            "  \"statusCode\": \"OK\",\n" +
-            "  \"message\": \"The regular user is successfully deleted.\"\n" +
             "}";
     
     public static final String USER_GET_RESPONSE_SINGLE_EXAMPLE = "{\n" +

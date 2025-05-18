@@ -2,6 +2,7 @@ package com.swiftling.service.impl;
 
 import com.swiftling.config.KeycloakProperties;
 import com.swiftling.dto.AccountDTO;
+import com.swiftling.dto.UpdateAccountRequestDTO;
 import com.swiftling.exception.UserNotFoundException;
 import com.swiftling.service.KeycloakService;
 import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
@@ -75,6 +76,34 @@ public class KeycloakServiceImpl implements KeycloakService {
 
     }
 
+    @Override
+    public void userUpdate(UpdateAccountRequestDTO requestDTO) {
+
+        try (Keycloak keycloak = getKeycloakInstance()) {
+
+            RealmResource realmResource = keycloak.realm(keycloakProperties.getRealm());
+            UsersResource usersResource = realmResource.users();
+
+            List<UserRepresentation> userRepresentations = usersResource.search(requestDTO.getEmail());
+
+            if (userRepresentations.isEmpty()) {
+                throw new UserNotFoundException("The user account does not exist: " + requestDTO.getEmail());
+            }
+
+            UserRepresentation keycloakUser = userRepresentations.get(0);
+
+            keycloakUser.setFirstName(requestDTO.getFirstName());
+            keycloakUser.setLastName(requestDTO.getLastName());
+            keycloakUser.setEmail(requestDTO.getEmail());
+            keycloakUser.setUsername(requestDTO.getEmail());
+            keycloakUser.setEmailVerified(true);
+
+            usersResource.get(keycloakUser.getId()).update(keycloakUser);
+
+        }
+
+    }
+
     public void enableUser(String username) {
 
         Keycloak keycloak = getKeycloakInstance();
@@ -116,6 +145,23 @@ public class KeycloakServiceImpl implements KeycloakService {
             newCredential.setValue(newPassword);
 
             usersResource.get(userId).resetPassword(newCredential);
+
+        }
+
+    }
+
+    @Override
+    public void delete(String username) {
+
+        try (Keycloak keycloak = getKeycloakInstance()) {
+
+            RealmResource realmResource = keycloak.realm(keycloakProperties.getRealm());
+            UsersResource usersResource = realmResource.users();
+
+            List<UserRepresentation> userRepresentations = usersResource.search(username);
+            String uid = userRepresentations.get(0).getId();
+
+            usersResource.delete(uid);
 
         }
 

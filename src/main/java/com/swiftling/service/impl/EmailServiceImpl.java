@@ -52,12 +52,12 @@ public class EmailServiceImpl implements EmailService {
         String subject = "Verify your account";
         String content = String.format("""
             Hello,
-
+            
             Please verify your account by clicking the link below:
             %s
-
+            
             This link will expire in 24 hours.
-
+            
             Regards,
             The SwiftLing Team
             """, verifyLink);
@@ -71,15 +71,15 @@ public class EmailServiceImpl implements EmailService {
 
         String subject = "Welcome to SwiftLing App!";
         String content = """
-                Hello,
-
-                Your account has been successfully verified! 🎉
-
-                You can now log in and start using all features.
-
-                Regards,
-                The SwiftLing Team
-                """;
+            Hello,
+            
+            Your account has been successfully verified! 🎉
+            
+            You can now log in and start using all features.
+            
+            Regards,
+            The SwiftLing Team
+            """;
 
         sendEmail(email, subject, content);
 
@@ -106,16 +106,16 @@ public class EmailServiceImpl implements EmailService {
         String subject = "Reset your password";
         String content = String.format("""
             Hello,
-
+            
             We received a request to reset your password.
-
+            
             You can reset your password by clicking the link below:
             %s
-
+            
             If you did not request this, you can safely ignore this email.
-
+            
             This link is valid for 1 hour.
-
+            
             Regards,
             The SwiftLing Team
             """, resetLink);
@@ -127,28 +127,60 @@ public class EmailServiceImpl implements EmailService {
     @Override
     public void sendPasswordChangedEmail(String email) {
 
-        String supportEmail = "support@";
-
-        if (frontendUrl.contains("http://")) {
-            supportEmail += frontendUrl.replace("http://", "");
-        } else {
-            supportEmail += frontendUrl.replace("https://", "");
-        }
-
         String subject = "Your password has been changed";
         String content = String.format("""
             Hello,
-
+            
             This is a confirmation that your password has been changed.
-
+            
+            If you made these changes, you can safely ignore this message.
             If you did not make this change, please contact support immediately.
             You can reach out to support team by using this email address: %s
-
+            
             Regards,
             The SwiftLing Team
-            """, supportEmail);
+            """, getSupportEmailAddress());
 
         sendEmail(email, subject, content);
+
+    }
+
+    @Override
+    public void sendAccountUpdatedEmailToOldEmail(String oldEmail) {
+
+        String subject = "Your account has been updated";
+        String content = String.format("""
+            Hello,
+            
+            This is to inform you that changes were made to your account.
+            
+            If you made these changes, you can safely ignore this message.
+            If you did not make this change, please contact support immediately.
+            You can reach out to support team by using this email address: %s
+            
+            Regards,
+            The SwiftLing Team
+            """, getSupportEmailAddress());
+
+        sendEmail(oldEmail, subject, content);
+
+    }
+
+    @Override
+    public void sendEmailChangeConfirmationToNewEmail(String newEmail) {
+
+        String subject = "Your email change has been confirmed";
+        String content = String.format("""
+            Hello,
+            
+            This is a confirmation that your email address has been successfully updated
+            and is now associated with your SwiftLing account.
+            
+            Regards,
+            The SwiftLing Team
+            """);
+
+        sendEmail(newEmail, subject, content);
 
     }
 
@@ -158,6 +190,20 @@ public class EmailServiceImpl implements EmailService {
         message.setSubject(subject);
         message.setText(content);
         mailSender.send(message);
+    }
+
+    private String getSupportEmailAddress() {
+
+        String supportEmail = "support@";
+
+        if (frontendUrl.contains("http://")) {
+            supportEmail += frontendUrl.replace("http://", "");
+        } else {
+            supportEmail += frontendUrl.replace("https://", "");
+        }
+
+        return supportEmail;
+
     }
 
 }

@@ -3,6 +3,7 @@ package com.swiftling.controller;
 import com.swiftling.dto.AccountDTO;
 import com.swiftling.dto.ChangePasswordRequestDTO;
 import com.swiftling.dto.ResetPasswordRequestDTO;
+import com.swiftling.dto.UpdateAccountRequestDTO;
 import com.swiftling.dto.wrapper.ExceptionWrapper;
 import com.swiftling.dto.wrapper.ResponseWrapper;
 import com.swiftling.service.AccountService;
@@ -85,8 +86,8 @@ public class AccountController {
 
         accountService.enable(token);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(ResponseWrapper.builder()
-                .statusCode(HttpStatus.CREATED)
+        return ResponseEntity.status(HttpStatus.OK).body(ResponseWrapper.builder()
+                .statusCode(HttpStatus.OK)
                 .success(true)
                 .message("The user account has been enabled successfully.")
                 .build());
@@ -108,7 +109,7 @@ public class AccountController {
             @ApiResponse(responseCode = "403", description = "Access is denied",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionWrapper.class),
                             examples = @ExampleObject(value = SwaggerExamples.ACCESS_DENIED_FORBIDDEN_RESPONSE_EXAMPLE)))})
-    public ResponseEntity<ResponseWrapper> forgotPassword(@RequestParam("email") String email) {
+    public ResponseEntity<ResponseWrapper> forgotPassword(@RequestParam(value = "email", required = true) String email) {
 
         accountService.forgotPassword(email);
 
@@ -121,7 +122,7 @@ public class AccountController {
     }
 
     @PostMapping("/reset-pass")
-    @Operation(summary = "Reset password using a valid reset token.",
+    @Operation(summary = "Reset the password of an existing user account by using a valid reset token.",
             requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResetPasswordRequestDTO.class),
                             examples = @ExampleObject(value = SwaggerExamples.RESET_PASSWORD_REQUEST_EXAMPLE))))
@@ -153,9 +154,9 @@ public class AccountController {
     }
 
     @PostMapping("/change-pass")
-    @Operation(summary = "Change password.",
+    @Operation(summary = "Change the password of an existing user account.",
             requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResetPasswordRequestDTO.class),
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ChangePasswordRequestDTO.class),
                             examples = @ExampleObject(value = SwaggerExamples.CHANGE_PASSWORD_REQUEST_EXAMPLE))))
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Password has been changed successfully.",
@@ -176,6 +177,57 @@ public class AccountController {
                 .success(true)
                 .message("Password has been changed successfully.")
                 .build());
+    }
+
+    @PatchMapping("/update-account")
+    @Operation(summary = "Update an existing user account.",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = UpdateAccountRequestDTO.class),
+                            examples = @ExampleObject(value = SwaggerExamples.USER_UPDATE_REQUEST_EXAMPLE))))
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "The user account has been updated successfully.",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseWrapper.class),
+                            examples = @ExampleObject(value = SwaggerExamples.USER_CREATE_RESPONSE_EXAMPLE))),
+            @ApiResponse(responseCode = "404", description = "The user account does not exist: + sample@email.com",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionWrapper.class),
+                            examples = @ExampleObject(value = SwaggerExamples.USER_NOT_FOUND_RESPONSE_EXAMPLE))),
+            @ApiResponse(responseCode = "400", description = "Invalid Input(s)",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionWrapper.class),
+                            examples = @ExampleObject(value = SwaggerExamples.VALIDATION_EXCEPTION_RESPONSE_EXAMPLE))),
+            @ApiResponse(responseCode = "403", description = "Access is denied",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionWrapper.class),
+                            examples = @ExampleObject(value = SwaggerExamples.ACCESS_DENIED_FORBIDDEN_RESPONSE_EXAMPLE)))})
+    public ResponseEntity<ResponseWrapper> updateAccount(@Valid @RequestBody UpdateAccountRequestDTO requestDTO) {
+
+        AccountDTO updatedAccount = accountService.update(requestDTO);
+
+        return ResponseEntity.status(HttpStatus.OK).body(ResponseWrapper.builder()
+                .statusCode(HttpStatus.OK)
+                .success(true)
+                .message("The user account has been updated successfully.")
+                .data(updatedAccount)
+                .build());
+
+    }
+
+    @DeleteMapping("/delete-account")
+    @Operation(summary = "Delete an existing user account.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "The user account has been deleted successfully."),
+            @ApiResponse(responseCode = "404", description = "The user account does not exist: + sample@email.com",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionWrapper.class),
+                            examples = @ExampleObject(value = SwaggerExamples.USER_NOT_FOUND_RESPONSE_EXAMPLE))),
+            @ApiResponse(responseCode = "403", description = "Access is denied",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionWrapper.class),
+                            examples = @ExampleObject(value = SwaggerExamples.ACCESS_DENIED_FORBIDDEN_RESPONSE_EXAMPLE)))})
+    public ResponseEntity<ResponseWrapper> deleteAccount(@RequestParam(value = "email", required = true) String email) {
+
+        accountService.delete(email);
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(ResponseWrapper.builder()
+                .statusCode(HttpStatus.NO_CONTENT)
+                .build());
+
     }
 
 }

@@ -1,6 +1,7 @@
 package com.swiftling.service;
 
 import com.swiftling.dto.AccountDTO;
+import com.swiftling.dto.UpdateAccountRequestDTO;
 import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
 
 public interface KeycloakService {
@@ -13,8 +14,12 @@ public interface KeycloakService {
 
     void userCreate(AccountDTO accountDTO);
 
+    void userUpdate(UpdateAccountRequestDTO requestDTO);
+
     void enableUser(String username);
 
     void resetUserPassword(String username, String newPassword);
+
+    void delete(String username);
 
 }

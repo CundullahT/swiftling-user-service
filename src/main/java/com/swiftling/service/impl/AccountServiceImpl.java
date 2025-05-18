@@ -1,6 +1,7 @@
 package com.swiftling.service.impl;
 
 import com.swiftling.dto.AccountDTO;
+import com.swiftling.dto.UpdateAccountRequestDTO;
 import com.swiftling.entity.Account;
 import com.swiftling.entity.Token;
 import com.swiftling.exception.*;
@@ -139,6 +140,54 @@ public class AccountServiceImpl implements AccountService {
             emailService.sendPasswordChangedEmail(loggedInUserName);
 
         }
+
+    }
+
+    @Override
+    public AccountDTO update(UpdateAccountRequestDTO requestDTO) {
+
+        Account foundAccount = accountRepository.findByEmail(requestDTO.getEmail())
+                .orElseThrow(() -> new UserNotFoundException("The user account does not exist: " + requestDTO.getEmail()));
+
+        if (foundAccount.getIsDeleted()) {
+            throw new UserNotFoundException("The user account does not exist: " + requestDTO.getEmail());
+        }
+
+        if (!foundAccount.getIsEnabled()) {
+            throw new UserNotEnabledException("The user account is not enabled: " + requestDTO.getEmail());
+        }
+
+        String oldEmail = foundAccount.getEmail();
+
+        foundAccount.setEmail(requestDTO.getEmail());
+        foundAccount.setFirstName(requestDTO.getFirstName());
+        foundAccount.setLastName(requestDTO.getLastName());
+
+        keycloakService.userUpdate(requestDTO);
+
+        Account savedAccount = accountRepository.save(foundAccount);
+
+        emailService.sendAccountUpdatedEmailToOldEmail(oldEmail);
+
+        if (!oldEmail.equalsIgnoreCase(requestDTO.getEmail())){
+            emailService.sendEmailChangeConfirmationToNewEmail(requestDTO.getEmail());
+        }
+
+        return mapperUtil.convert(savedAccount, new AccountDTO());
+
+    }
+
+    @Override
+    public void delete(String email) {
+
+        Account accountToDelete = accountRepository.findByEmailAndIsDeleted(email, false)
+                .orElseThrow(() -> new UserNotFoundException("The user account does not exist: " + email));
+
+        accountToDelete.setEmail(accountToDelete.getEmail() + "-" + accountToDelete.getId());
+        accountToDelete.setIsDeleted(true);
+
+        keycloakService.delete(email);
+        accountRepository.save(accountToDelete);
 
     }
 
