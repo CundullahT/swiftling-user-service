@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.UUID;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -13,7 +15,7 @@ import lombok.Setter;
 public class Account extends BaseEntity {
 
     @Column(unique = true, nullable = false)
-    private String externalId;
+    private UUID externalId;
 
     @Column(nullable = false)
     private String firstName;

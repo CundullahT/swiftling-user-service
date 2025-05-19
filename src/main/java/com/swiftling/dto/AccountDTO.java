@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,7 +20,7 @@ public class AccountDTO {
     private Long id;
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private String externalId;
+    private UUID externalId;
 
     @NotBlank(message = "First name is a required field.")
     @Size(max = 24, min = 2, message = "The first name must be between 2 and 24 characters long.")

@@ -47,7 +47,7 @@ public class AccountServiceImpl implements AccountService {
 
         Account accountToSave = mapperUtil.convert(accountDTO, new Account());
 
-        accountToSave.setExternalId(UUID.randomUUID().toString());
+        accountToSave.setExternalId(UUID.randomUUID());
         accountToSave.setIsDeleted(false);
         accountToSave.setIsEnabled(false);
 
