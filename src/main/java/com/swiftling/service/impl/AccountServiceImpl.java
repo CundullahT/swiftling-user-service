@@ -200,4 +200,14 @@ public class AccountServiceImpl implements AccountService {
 
     }
 
+    @Override
+    public UUID getExternalIdOfUserAccount(String email) {
+
+        Account foundAccount = accountRepository.findByEmail(email)
+                .orElseThrow(() -> new UserNotFoundException("The user account does not exist: " + email));
+
+        return foundAccount.getExternalId();
+
+    }
+
 }

@@ -19,6 +19,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @CrossOrigin("http://localhost:8762")
 @RequestMapping("/api/v1/account")
@@ -100,7 +102,7 @@ public class AccountController {
             @ApiResponse(responseCode = "200", description = "The forgot password email was sent successfully.",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseWrapper.class),
                             examples = @ExampleObject(value = SwaggerExamples.USER_FORGOT_PASSWORD_RESPONSE_EXAMPLE))),
-            @ApiResponse(responseCode = "404", description = "The user account does not exist.",
+            @ApiResponse(responseCode = "404", description = "The user account does not exist: + sample@email.com",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionWrapper.class),
                             examples = @ExampleObject(value = SwaggerExamples.USER_NOT_FOUND_RESPONSE_EXAMPLE))),
             @ApiResponse(responseCode = "400", description = "Invalid Input(s)",
@@ -187,7 +189,7 @@ public class AccountController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "The user account has been updated successfully.",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseWrapper.class),
-                            examples = @ExampleObject(value = SwaggerExamples.USER_CREATE_RESPONSE_EXAMPLE))),
+                            examples = @ExampleObject(value = SwaggerExamples.USER_UPDATE_RESPONSE_EXAMPLE))),
             @ApiResponse(responseCode = "404", description = "The user account does not exist: + sample@email.com",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionWrapper.class),
                             examples = @ExampleObject(value = SwaggerExamples.USER_NOT_FOUND_RESPONSE_EXAMPLE))),
@@ -226,6 +228,31 @@ public class AccountController {
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(ResponseWrapper.builder()
                 .statusCode(HttpStatus.NO_CONTENT)
+                .build());
+
+    }
+
+    @GetMapping("/get-external-id")
+    @Operation(summary = "Get the external id of an existing user account.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "The external id of an existing user account has been retrieved successfully.",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseWrapper.class),
+                            examples = @ExampleObject(value = SwaggerExamples.EXTERNAL_ID_RESPONSE_EXAMPLE))),
+            @ApiResponse(responseCode = "404", description = "The user account does not exist: + sample@email.com",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionWrapper.class),
+                            examples = @ExampleObject(value = SwaggerExamples.USER_NOT_FOUND_RESPONSE_EXAMPLE))),
+            @ApiResponse(responseCode = "403", description = "Access is denied",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionWrapper.class),
+                            examples = @ExampleObject(value = SwaggerExamples.ACCESS_DENIED_FORBIDDEN_RESPONSE_EXAMPLE)))})
+    public ResponseEntity<ResponseWrapper> getExternalUserId(@RequestParam(value = "email", required = true) String email) {
+
+        UUID externalId = accountService.getExternalIdOfUserAccount(email);
+
+        return ResponseEntity.ok(ResponseWrapper.builder()
+                .statusCode(HttpStatus.OK)
+                .success(true)
+                .message("The external id of an existing user account has been retrieved successfully.")
+                .data(externalId)
                 .build());
 
     }

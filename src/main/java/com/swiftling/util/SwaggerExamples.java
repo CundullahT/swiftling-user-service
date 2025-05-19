@@ -32,6 +32,13 @@ public class SwaggerExamples {
             "  \"message\": \"Password has been reset successfully.\"\n" +
             "}";
 
+    public static final String EXTERNAL_ID_RESPONSE_EXAMPLE = "{\n" +
+            "  \"success\": true,\n" +
+            "  \"statusCode\": \"OK\",\n" +
+            "  \"message\": \"The external id of an existing user account has been retrieved successfully.\"\n" +
+            "  \"data\": \"a18aa00a-0a4b-4d1f-ba40-ae1001428c32\"\n" +
+            "}";
+
     public static final String CHANGE_PASSWORD_RESPONSE_EXAMPLE = "{\n" +
             "  \"success\": true,\n" +
             "  \"statusCode\": \"OK\",\n" +

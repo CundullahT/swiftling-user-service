@@ -3,6 +3,8 @@ package com.swiftling.service;
 import com.swiftling.dto.AccountDTO;
 import com.swiftling.dto.UpdateAccountRequestDTO;
 
+import java.util.UUID;
+
 public interface AccountService {
 
     AccountDTO signUp(AccountDTO accountDTO);
@@ -18,5 +20,7 @@ public interface AccountService {
     AccountDTO update(UpdateAccountRequestDTO requestDTO);
 
     void delete(String email);
+
+    UUID getExternalIdOfUserAccount(String email);
 
 }
