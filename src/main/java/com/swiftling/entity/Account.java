@@ -12,7 +12,7 @@ import lombok.Setter;
 @Table(name = "accounts")
 public class Account extends BaseEntity {
 
-    @Column(nullable = false)
+    @Column(unique = true, nullable = false)
     private String externalId;
 
     @Column(nullable = false)
