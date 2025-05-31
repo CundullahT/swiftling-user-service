@@ -180,7 +180,7 @@ public class AccountServiceImpl implements AccountService {
 
         emailService.sendAccountUpdatedEmailToOldEmail(oldEmail);
 
-        if (!oldEmail.equalsIgnoreCase(requestDTO.getEmail())){
+        if (!oldEmail.equalsIgnoreCase(requestDTO.getEmail())) {
             emailService.sendEmailChangeConfirmationToNewEmail(requestDTO.getEmail());
         }
 
@@ -198,7 +198,12 @@ public class AccountServiceImpl implements AccountService {
         accountToDelete.setIsDeleted(true);
 
         keycloakService.delete(email);
-        accountRepository.save(accountToDelete);
+
+        try {
+            accountRepository.save(accountToDelete);
+        } catch (Throwable exception) {
+            throw new UserCanNotBeDeletedException("The user can not be deleted: " + email);
+        }
 
     }
 
