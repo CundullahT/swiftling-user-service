@@ -3,6 +3,7 @@ package com.swiftling.service.impl;
 import com.swiftling.config.KeycloakProperties;
 import com.swiftling.dto.AccountDTO;
 import com.swiftling.dto.UpdateAccountRequestDTO;
+import com.swiftling.exception.UserCanNotBeDeletedException;
 import com.swiftling.exception.UserNotFoundException;
 import com.swiftling.service.KeycloakService;
 import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
@@ -163,6 +164,8 @@ public class KeycloakServiceImpl implements KeycloakService {
 
             usersResource.delete(uid);
 
+        } catch (Throwable exception) {
+            throw new UserCanNotBeDeletedException("The user can not be deleted: " + username);
         }
 
     }

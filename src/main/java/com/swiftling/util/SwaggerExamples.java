@@ -149,7 +149,7 @@ public class SwaggerExamples {
 
     public static final String USER_NOT_DELETED_RESPONSE_EXAMPLE = "{\n" +
             "  \"success\": false,\n" +
-            "  \"message\": \"User can not be deleted.\",\n" +
+            "  \"message\": \"The user can not be deleted: + sample@email.com\",\n" +
             "  \"httpStatus\": \"CONFLICT\",\n" +
             "  \"localDateTime\": \"2024-01-01T00:00:00.0000000\"\n" +
             "}";
