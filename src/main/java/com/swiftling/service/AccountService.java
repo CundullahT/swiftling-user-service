@@ -21,6 +21,6 @@ public interface AccountService {
 
     void delete(String email);
 
-    UUID getExternalIdOfUserAccount(String email);
+    UUID getExternalIdOfUserAccount();
 
 }

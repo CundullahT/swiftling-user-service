@@ -235,7 +235,7 @@ public class AccountController {
     @GetMapping("/get-external-id")
     @Operation(summary = "Get the external id of an existing user account.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "The external id of an existing user account has been retrieved successfully.",
+            @ApiResponse(responseCode = "200", description = "The external id of the logged in user account has been retrieved successfully.",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseWrapper.class),
                             examples = @ExampleObject(value = SwaggerExamples.EXTERNAL_ID_RESPONSE_EXAMPLE))),
             @ApiResponse(responseCode = "404", description = "The user account does not exist: + sample@email.com",
@@ -244,14 +244,14 @@ public class AccountController {
             @ApiResponse(responseCode = "403", description = "Access is denied",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionWrapper.class),
                             examples = @ExampleObject(value = SwaggerExamples.ACCESS_DENIED_FORBIDDEN_RESPONSE_EXAMPLE)))})
-    public ResponseEntity<ResponseWrapper> getExternalUserId(@RequestParam(value = "email", required = true) String email) {
+    public ResponseEntity<ResponseWrapper> getExternalUserId() {
 
-        UUID externalId = accountService.getExternalIdOfUserAccount(email);
+        UUID externalId = accountService.getExternalIdOfUserAccount();
 
         return ResponseEntity.ok(ResponseWrapper.builder()
                 .statusCode(HttpStatus.OK)
                 .success(true)
-                .message("The external id of an existing user account has been retrieved successfully.")
+                .message("The external id of the logged in user account has been retrieved successfully.")
                 .data(externalId)
                 .build());
 

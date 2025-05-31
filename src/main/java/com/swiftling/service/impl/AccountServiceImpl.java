@@ -149,15 +149,17 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public AccountDTO update(UpdateAccountRequestDTO requestDTO) {
 
-        Account foundAccount = accountRepository.findByEmail(requestDTO.getEmail())
-                .orElseThrow(() -> new UserNotFoundException("The user account does not exist: " + requestDTO.getEmail()));
+        String loggedInEmailUsername = keycloakService.getLoggedInUserName();
+
+        Account foundAccount = accountRepository.findByEmail(loggedInEmailUsername)
+                .orElseThrow(() -> new UserNotFoundException("The user account does not exist: " + loggedInEmailUsername));
 
         if (foundAccount.getIsDeleted()) {
-            throw new UserNotFoundException("The user account does not exist: " + requestDTO.getEmail());
+            throw new UserNotFoundException("The user account does not exist: " + loggedInEmailUsername);
         }
 
         if (!foundAccount.getIsEnabled()) {
-            throw new UserNotEnabledException("The user account is not enabled: " + requestDTO.getEmail());
+            throw new UserNotEnabledException("The user account is not enabled: " + loggedInEmailUsername);
         }
 
         String oldEmail = foundAccount.getEmail();
@@ -201,7 +203,9 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public UUID getExternalIdOfUserAccount(String email) {
+    public UUID getExternalIdOfUserAccount() {
+
+        String email = keycloakService.getLoggedInUserName();
 
         Account foundAccount = accountRepository.findByEmail(email)
                 .orElseThrow(() -> new UserNotFoundException("The user account does not exist: " + email));
