@@ -32,7 +32,7 @@ public class EmailServiceImpl implements EmailService {
     private String frontendUrl;
 
     @Override
-    public void sendSignUpEmail(String email) {
+    public void sendVerifyEmailAddressEmail(String email) {
 
         Account account = accountRepository.findByEmail(email)
                 .orElseThrow(() -> new UserNotFoundException("The user account does not exist: " + email));
@@ -49,11 +49,11 @@ public class EmailServiceImpl implements EmailService {
 
         String verifyLink = frontendUrl + "/auth/verify?token=" + tokenStr;
 
-        String subject = "Verify your account";
+        String subject = "Verify your email address";
         String content = String.format("""
             Hello,
             
-            Please verify your account by clicking the link below:
+            Please verify your email address by clicking the link below:
             %s
             
             This link will expire in 24 hours.
@@ -67,13 +67,13 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public void sendWelcomeEmail(String email) {
+    public void sendVerificationConfirmedEmail(String email) {
 
-        String subject = "Welcome to SwiftLing App!";
+        String subject = "Confirmation of the verification of your email address";
         String content = """
             Hello,
             
-            Your account has been successfully verified! 🎉
+            Your email address has been successfully verified! 🎉
             
             You can now log in and start using all features.
             

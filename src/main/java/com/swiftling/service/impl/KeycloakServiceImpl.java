@@ -62,8 +62,8 @@ public class KeycloakServiceImpl implements KeycloakService {
         keycloakUser.setLastName(accountDTO.getLastName());
         keycloakUser.setEmail(accountDTO.getEmail());
         keycloakUser.setCredentials(List.of(credential));
-        keycloakUser.setEmailVerified(true);
-        keycloakUser.setEnabled(true);
+        keycloakUser.setEmailVerified(false);
+        keycloakUser.setEnabled(false);
 
         try (Keycloak keycloak = getKeycloakInstance()) {
 
@@ -97,7 +97,7 @@ public class KeycloakServiceImpl implements KeycloakService {
             keycloakUser.setLastName(requestDTO.getLastName());
             keycloakUser.setEmail(requestDTO.getEmail());
             keycloakUser.setUsername(requestDTO.getEmail());
-            keycloakUser.setEmailVerified(true);
+            keycloakUser.setEmailVerified(false);
 
             usersResource.get(keycloakUser.getId()).update(keycloakUser);
 
@@ -105,6 +105,7 @@ public class KeycloakServiceImpl implements KeycloakService {
 
     }
 
+    @Override
     public void enableUser(String username) {
 
         Keycloak keycloak = getKeycloakInstance();
@@ -118,12 +119,14 @@ public class KeycloakServiceImpl implements KeycloakService {
         }
 
         UserRepresentation user = users.get(0);
+        user.setEmailVerified(true);
         user.setEnabled(true);
 
         realmResource.users().get(user.getId()).update(user);
 
     }
 
+    @Override
     public void resetUserPassword(String username, String newPassword) {
 
         try (Keycloak keycloak = getKeycloakInstance()) {

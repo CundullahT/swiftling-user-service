@@ -57,7 +57,7 @@ public class AccountServiceImpl implements AccountService {
 
         Account savedAccount = accountRepository.save(accountToSave);
 
-        emailService.sendSignUpEmail(savedAccount.getEmail());
+        emailService.sendVerifyEmailAddressEmail(savedAccount.getEmail());
 
         return accountDTO;
 
@@ -86,7 +86,7 @@ public class AccountServiceImpl implements AccountService {
 
         tokenRepository.deleteByToken((existingToken.getToken()));
 
-        emailService.sendWelcomeEmail(account.getEmail());
+        emailService.sendVerificationConfirmedEmail(account.getEmail());
 
     }
 
@@ -181,7 +181,7 @@ public class AccountServiceImpl implements AccountService {
         emailService.sendAccountUpdatedEmailToOldEmail(oldEmail);
 
         if (!oldEmail.equalsIgnoreCase(requestDTO.getEmail())) {
-            emailService.sendEmailChangeConfirmationToNewEmail(requestDTO.getEmail());
+            emailService.sendVerifyEmailAddressEmail(requestDTO.getEmail());
         }
 
         return mapperUtil.convert(savedAccount, new AccountDTO());
