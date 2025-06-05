@@ -13,21 +13,28 @@ Ensure the following dependencies are installed and configured:
 - **Netflix Eureka Server** (Service Discovery) (Example Eureka Server Repository = https://github.com/CundullahT/swiftling-discovery-service.git)
 - **Spring Cloud Config Server** (Configuration Management) (Example Config Server Repository = https://github.com/CundullahT/swiftling-config-service.git)
 - **Zipkin Server** (Distributed Tracing) **NOTE:** You can find the needed Docker command at the end of this document.
+- **Google Account Application Password** (for sending out emails to the users)
+- **Google Account Email Address** (for sending out emails to the users)
 
 ## Environment Variables
 The following environment variables must be set for the application to function properly:
 
-| Variable Name                 | Description|
-|-------------------------------|--------------------------------------------------------------------------------------------------------|
-| `KEYCLOAK_CLIENT_SECRET`      | The client secret for the configured Keycloak client (retrieve from Keycloak's client credentials tab).|
-| `KEYCLOAK_SERVICE`            | Base URL of the Keycloak server (e.g., `http://localhost:8080`).|
-| `LOG_TRACE_SERVICE`           | Base URL of the Zipkin server (e.g., `http://localhost:9411`).|
-| `SWIFTLING_CONFIG_SERVICE`    | Base URL of the Spring Cloud Config Server (e.g., `http://localhost:8888`).|
-| `SWIFTLING_DISCOVERY_SERVICE` | Base URL of the Eureka server (e.g., `http://localhost:8761`).|
-| `SWIFTLING_USER_DB_URL`        | JDBC URL for the User Service database (e.g., `jdbc:postgresql://localhost:5432/swiftling_user_db`).|
-| `SWIFTLING_USER_DB_USERNAME`   | Database username for the User Service database (set your own username).|
-| `SWIFTLING_USER_DB_PASSWORD`   | Database password for the User Service database (set your own password).|
-| `SWIFTLING_PROFILE`           | Active Spring profile (e.g., `local`, `dev`, `prod`).|
+| Variable Name                 | Description                                                                                             |
+|-------------------------------|---------------------------------------------------------------------------------------------------------|
+| `KEYCLOAK_CLIENT_SECRET`      | The client secret for the configured Keycloak client (retrieve from Keycloak's client credentials tab). |
+| `KEYCLOAK_SERVICE`            | Base URL of the Keycloak server (e.g., `http://localhost:8080`).                                        |
+| `LOG_TRACE_SERVICE`           | Base URL of the Zipkin server (e.g., `http://localhost:9411`).                                          |
+| `SWIFTLING_CONFIG_SERVICE`    | Base URL of the Spring Cloud Config Server (e.g., `http://localhost:8888`).                             |
+| `SWIFTLING_DISCOVERY_SERVICE` | Base URL of the Eureka server (e.g., `http://localhost:8761`).                                          |
+| `SWIFTLING_USER_DB_URL`       | JDBC URL for the User Service database (e.g., `jdbc:postgresql://localhost:5432/swiftling_user_db`).    |
+| `SWIFTLING_USER_DB_USERNAME`  | Database username for the User Service database (set your own username).                                |
+| `SWIFTLING_USER_DB_PASSWORD`  | Database password for the User Service database (set your own password).                                |
+| `SWIFTLING_PROFILE`           | Active Spring profile (e.g., `local`, `dev`, `prod`).                                                   |
+| `SWIFTLING_HOSTNAME`          | Hostname (if available, if none `demo` can be used).                                                    |
+| `GMAIL_APP_PASSWORD`          | Application password of the google account that is used to send emails to the users.                    |
+| `GMAIL_EMAIL`                 | The google account email address that is used to send emails to the users.                              |
+| `MASTER_PASSWORD`             | The master/admin password used in Keycloak to be able to connect to master realm to create users.       |
+| `MASTER_USER`                 | The master/admin username used in Keycloak to be able to connect to master realm to create users.       |
 
 ## Running the Application
 1. Clone the repository:
@@ -46,6 +53,11 @@ The following environment variables must be set for the application to function 
    export SWIFTLING_USER_DB_USERNAME=your_database_username
    export SWIFTLING_USER_DB_PASSWORD=your_database_password
    export SWIFTLING_PROFILE=dev
+   export SWIFTLING_HOSTNAME=demo
+   export GMAIL_APP_PASSWORD=your_gmail_application_password
+   export GMAIL_EMAIL=your_gmail_email_address
+   export MASTER_PASSWORD=your_keycloak_admin_master_password
+   export MASTER_USER=your_keycloak_admin_master_username
    ```
    For Windows (Command Prompt):
    ```cmd
@@ -58,6 +70,11 @@ The following environment variables must be set for the application to function 
    set SWIFTLING_USER_DB_PASSWORD=your_database_password
    set SWIFTLING_USER_DB_USERNAME=your_database_username
    set SWIFTLING_PROFILE=dev
+   set SWIFTLING_HOSTNAME=demo
+   set GMAIL_APP_PASSWORD=your_gmail_application_password
+   set GMAIL_EMAIL=your_gmail_email_address
+   set MASTER_PASSWORD=your_keycloak_admin_master_password
+   set MASTER_USER=your_keycloak_admin_master_username
    ```
 3. Build the project using Maven:
    ```sh
