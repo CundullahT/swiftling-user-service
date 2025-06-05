@@ -36,6 +36,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({UserNotFoundException.class, TokenNotFoundException.class})
     public ResponseEntity<ExceptionWrapper> handleNotFoundExceptions(Throwable exception) {
         log.error(exception.getMessage());
+        exception.printStackTrace();
         ExceptionWrapper exceptionWrapper = ExceptionWrapper.builder()
                 .success(false)
                 .message(exception.getMessage())
@@ -48,6 +49,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({UserAlreadyExistsException.class, UserCanNotBeDeletedException.class})
     public ResponseEntity<ExceptionWrapper> handleConflictExceptions(Throwable exception) {
         log.error(exception.getMessage());
+        exception.printStackTrace();
         ExceptionWrapper exceptionWrapper = ExceptionWrapper.builder()
                 .success(false)
                 .message(exception.getMessage())
@@ -60,6 +62,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({TokenExpiredException.class})
     public ResponseEntity<ExceptionWrapper> handleExpiredExceptions(Throwable exception) {
         log.error(exception.getMessage());
+        exception.printStackTrace();
         ExceptionWrapper exceptionWrapper = ExceptionWrapper.builder()
                 .success(false)
                 .message(exception.getMessage())
@@ -72,6 +75,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(PasswordIncorrectException.class)
     public ResponseEntity<ExceptionWrapper> handlePasswordIncorrectException(Throwable exception) {
         log.error(exception.getMessage());
+        exception.printStackTrace();
         ExceptionWrapper exceptionWrapper = ExceptionWrapper.builder()
                 .success(false)
                 .message(exception.getMessage())
@@ -84,6 +88,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(UserAlreadyEnabledException.class)
     public ResponseEntity<ExceptionWrapper> handleUserAlreadyEnabledException(Throwable exception) {
         log.error(exception.getMessage());
+        exception.printStackTrace();
         ExceptionWrapper exceptionWrapper = ExceptionWrapper.builder()
                 .success(false)
                 .message(exception.getMessage())
@@ -96,6 +101,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<ExceptionWrapper> handleAccessDeniedException(Throwable exception) {
         log.error(exception.getMessage());
+        exception.printStackTrace();
         ExceptionWrapper exceptionWrapper = ExceptionWrapper.builder()
                 .success(false)
                 .message(exception.getMessage())
@@ -109,6 +115,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ExceptionWrapper> handleValidationExceptions(MethodArgumentNotValidException exception) {
 
         log.error(exception.getMessage());
+        exception.printStackTrace();
 
         ExceptionWrapper exceptionWrapper = ExceptionWrapper.builder()
                 .success(false)
