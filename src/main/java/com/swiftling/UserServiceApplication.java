@@ -32,9 +32,9 @@ public class UserServiceApplication {
 
         defaultProperties.put("host.name-or-ip", hostOrIp);
 
-        boolean useIp = !env.equalsIgnoreCase("local") && (!env.equalsIgnoreCase("prod"));
+        boolean notUseIp = env.equalsIgnoreCase("local") || env.equalsIgnoreCase("prod");
 
-        if (useIp) {
+        if (!notUseIp) {
             defaultProperties.put("eureka.instance.preferIpAddress", true);
             defaultProperties.put("eureka.instance.ipAddress", hostOrIp);
         } else {
