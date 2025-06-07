@@ -30,7 +30,8 @@ public class SecurityConfig {
 
         return httpSecurity
                 .authorizeHttpRequests(httpRequests -> httpRequests
-                        .requestMatchers("/actuator/**",
+                        .requestMatchers("/actuator",
+                                "/actuator/**",
                                 "/swagger-ui/**",
                                 "/swagger-ui.html",
                                 "/v3/api-docs/**",
