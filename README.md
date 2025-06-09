@@ -35,6 +35,7 @@ The following environment variables must be set for the application to function 
 | `GMAIL_EMAIL`                 | The google account email address that is used to send emails to the users.                              |
 | `MASTER_PASSWORD`             | The master/admin password used in Keycloak to be able to connect to master realm to create users.       |
 | `MASTER_USER`                 | The master/admin username used in Keycloak to be able to connect to master realm to create users.       |
+| `ENV`                         | The environment in which the application is running (e.g., `local`, `dev`, `prod`).                     |
 
 ## Running the Application
 1. Clone the repository:
@@ -58,6 +59,7 @@ The following environment variables must be set for the application to function 
    export GMAIL_EMAIL=your_gmail_email_address
    export MASTER_PASSWORD=your_keycloak_admin_master_password
    export MASTER_USER=your_keycloak_admin_master_username
+   export ENV=dev
    ```
    For Windows (Command Prompt):
    ```cmd
@@ -75,6 +77,7 @@ The following environment variables must be set for the application to function 
    set GMAIL_EMAIL=your_gmail_email_address
    set MASTER_PASSWORD=your_keycloak_admin_master_password
    set MASTER_USER=your_keycloak_admin_master_username
+   set ENV=dev
    ```
 3. Build the project using Maven:
    ```sh
