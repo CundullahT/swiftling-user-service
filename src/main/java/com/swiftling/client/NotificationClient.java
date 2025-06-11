@@ -3,9 +3,9 @@ package com.swiftling.client;
 import com.swiftling.dto.UserIdEmailRequestDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @FeignClient(value = "swiftling-notification-service")
 public interface NotificationClient {
@@ -15,5 +15,8 @@ public interface NotificationClient {
 
     @PutMapping("/api/v1/user-id-email")
     ResponseEntity<UserIdEmailRequestDTO> updateUserIdEmail(@RequestBody UserIdEmailRequestDTO userIdEmailRequestDTO);
+
+    @DeleteMapping("/api/v1/user-id-email")
+    ResponseEntity<UserIdEmailRequestDTO> deleteUserIdEmail(@RequestParam(value = "externalId", required = true) UUID externalId);
 
 }

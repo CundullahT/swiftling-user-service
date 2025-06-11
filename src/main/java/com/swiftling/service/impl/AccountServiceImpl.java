@@ -14,12 +14,14 @@ import com.swiftling.service.AccountService;
 import com.swiftling.service.EmailService;
 import com.swiftling.service.KeycloakService;
 import com.swiftling.util.MapperUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+@Slf4j
 @Service
 public class AccountServiceImpl implements AccountService {
 
@@ -220,6 +222,14 @@ public class AccountServiceImpl implements AccountService {
             accountRepository.save(accountToDelete);
         } catch (Throwable exception) {
             throw new UserCanNotBeDeletedException("The user can not be deleted: " + email);
+        }
+
+        try {
+            notificationClient.deleteUserIdEmail(accountToDelete.getExternalId());
+        } catch (Throwable exception) {
+            log.error(exception.getMessage());
+            exception.printStackTrace();
+            throw new UserIdEmailNotDeletedException("The user id " + accountToDelete.getExternalId() + " and email " + email + " can not be deleted.");
         }
 
     }
