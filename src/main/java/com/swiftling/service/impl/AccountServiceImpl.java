@@ -1,7 +1,9 @@
 package com.swiftling.service.impl;
 
+import com.swiftling.client.NotificationClient;
 import com.swiftling.dto.AccountDTO;
 import com.swiftling.dto.UpdateAccountRequestDTO;
+import com.swiftling.dto.UserIdEmailRequestDTO;
 import com.swiftling.entity.Account;
 import com.swiftling.entity.Token;
 import com.swiftling.enums.TokenType;
@@ -27,14 +29,16 @@ public class AccountServiceImpl implements AccountService {
     private final PasswordEncoder passwordEncoder;
     private final KeycloakService keycloakService;
     private final TokenRepository tokenRepository;
+    private final NotificationClient notificationClient;
 
-    public AccountServiceImpl(AccountRepository accountRepository, MapperUtil mapperUtil, EmailService emailService, PasswordEncoder passwordEncoder, KeycloakService keycloakService, TokenRepository tokenRepository) {
+    public AccountServiceImpl(AccountRepository accountRepository, MapperUtil mapperUtil, EmailService emailService, PasswordEncoder passwordEncoder, KeycloakService keycloakService, TokenRepository tokenRepository, NotificationClient notificationClient) {
         this.accountRepository = accountRepository;
         this.mapperUtil = mapperUtil;
         this.emailService = emailService;
         this.passwordEncoder = passwordEncoder;
         this.keycloakService = keycloakService;
         this.tokenRepository = tokenRepository;
+        this.notificationClient = notificationClient;
     }
 
     @Override
@@ -56,6 +60,12 @@ public class AccountServiceImpl implements AccountService {
         accountToSave.setPassword(passwordEncoder.encode(accountDTO.getPassword()));
 
         Account savedAccount = accountRepository.save(accountToSave);
+
+        UserIdEmailRequestDTO userIdEmailRequestDTO = new UserIdEmailRequestDTO();
+        userIdEmailRequestDTO.setExternalId(savedAccount.getExternalId());
+        userIdEmailRequestDTO.setEmail(savedAccount.getEmail());
+
+        notificationClient.createUserIdEmail(userIdEmailRequestDTO);
 
         emailService.sendVerifyEmailAddressEmail(savedAccount.getEmail());
 
@@ -181,7 +191,14 @@ public class AccountServiceImpl implements AccountService {
         emailService.sendAccountUpdatedEmailToOldEmail(oldEmail);
 
         if (!oldEmail.equalsIgnoreCase(requestDTO.getEmail())) {
+
+            UserIdEmailRequestDTO userIdEmailRequestDTO = new UserIdEmailRequestDTO();
+            userIdEmailRequestDTO.setExternalId(savedAccount.getExternalId());
+            userIdEmailRequestDTO.setEmail(requestDTO.getEmail());
+
+            notificationClient.createUserIdEmail(userIdEmailRequestDTO);
             emailService.sendVerifyEmailAddressEmail(requestDTO.getEmail());
+
         }
 
         return mapperUtil.convert(savedAccount, new AccountDTO());
