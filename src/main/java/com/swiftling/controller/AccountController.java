@@ -230,7 +230,6 @@ public class AccountController {
         accountService.delete(email);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(ResponseWrapper.builder()
-                .statusCode(HttpStatus.NO_CONTENT)
                 .build());
 
     }
