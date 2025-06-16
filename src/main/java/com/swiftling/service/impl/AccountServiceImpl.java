@@ -114,6 +114,7 @@ public class AccountServiceImpl implements AccountService {
 
     }
 
+    @Transactional
     @Override
     public void resetPassword(String token, String newPassword) {
 

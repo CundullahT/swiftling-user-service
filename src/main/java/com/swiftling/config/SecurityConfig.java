@@ -38,6 +38,8 @@ public class SecurityConfig {
                                 "/v3/api-docs.yaml",
                                 "/api/v1/account/signup",
                                 "/api/v1/account/enable",
+                                "/api/v1/account/forgot-pass",
+                                "/api/v1/account/reset-pass",
                                 "/login",
                                 "/signup",
                                 "/enable",
