@@ -14,12 +14,14 @@ public interface KeycloakService {
 
     void userCreate(AccountDTO accountDTO);
 
-    void userUpdate(UpdateAccountRequestDTO requestDTO);
+    void userUpdate(String loggedInEmailUsername, UpdateAccountRequestDTO requestDTO);
 
     void enableUser(String username);
 
     void resetUserPassword(String username, String newPassword);
 
     void delete(String username);
+
+    String getLogoutRedirectUrl(String frontendUrl);
 
 }

@@ -7,6 +7,7 @@ import com.swiftling.dto.UpdateAccountRequestDTO;
 import com.swiftling.dto.wrapper.ExceptionWrapper;
 import com.swiftling.dto.wrapper.ResponseWrapper;
 import com.swiftling.service.AccountService;
+import com.swiftling.service.KeycloakService;
 import com.swiftling.util.SwaggerExamples;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -14,11 +15,15 @@ import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -26,10 +31,15 @@ import java.util.UUID;
 @RequestMapping("/api/v1/account")
 public class AccountController {
 
-    private final AccountService accountService;
+    @Value("${app.frontend.url}")
+    private String frontendUrl;
 
-    public AccountController(AccountService accountService) {
+    private final AccountService accountService;
+    private final KeycloakService keycloakService;
+
+    public AccountController(AccountService accountService, KeycloakService keycloakService) {
         this.accountService = accountService;
+        this.keycloakService = keycloakService;
     }
 
     @PostMapping("/signup")
@@ -215,7 +225,9 @@ public class AccountController {
     @DeleteMapping("/delete-account")
     @Operation(summary = "Delete an existing user account.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "204", description = "The user account has been deleted successfully."),
+            @ApiResponse(responseCode = "204", description = "The user account has been deleted successfully.",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseWrapper.class),
+                            examples = @ExampleObject(value = SwaggerExamples.USER_DELETE_RESPONSE_EXAMPLE))),
             @ApiResponse(responseCode = "404", description = "The user account does not exist: + sample@email.com",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionWrapper.class),
                             examples = @ExampleObject(value = SwaggerExamples.USER_NOT_FOUND_RESPONSE_EXAMPLE))),
@@ -225,12 +237,21 @@ public class AccountController {
             @ApiResponse(responseCode = "403", description = "Access is denied",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionWrapper.class),
                             examples = @ExampleObject(value = SwaggerExamples.ACCESS_DENIED_FORBIDDEN_RESPONSE_EXAMPLE)))})
-    public ResponseEntity<ResponseWrapper> deleteAccount(@RequestParam(value = "email", required = true) String email) {
+    public ResponseEntity<ResponseWrapper> deleteAccount(HttpServletRequest request) throws ServletException {
 
-        accountService.delete(email);
+        String logoutUrlNoIdToken = keycloakService.getLogoutRedirectUrl(frontendUrl);
 
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(ResponseWrapper.builder()
-                .build());
+        accountService.delete();
+
+        request.logout();
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(ResponseWrapper.builder()
+                        .success(true)
+                        .statusCode(HttpStatus.OK)
+                        .message("The user account has been deleted successfully.")
+                        .data(Map.of("logoutUrlNoIdToken", logoutUrlNoIdToken))
+                        .build());
 
     }
 

@@ -189,7 +189,9 @@ public class AccountServiceImpl implements AccountService {
             foundAccount.setLastName(requestDTO.getLastName());
         }
 
-        keycloakService.userUpdate(requestDTO);
+        foundAccount.setIsEnabled(false);
+
+        keycloakService.userUpdate(loggedInEmailUsername, requestDTO);
 
         Account savedAccount = accountRepository.save(foundAccount);
 
@@ -201,7 +203,7 @@ public class AccountServiceImpl implements AccountService {
             userIdEmailRequestDTO.setExternalId(savedAccount.getExternalId());
             userIdEmailRequestDTO.setEmail(requestDTO.getEmail());
 
-            notificationClient.createUserIdEmail(userIdEmailRequestDTO);
+            notificationClient.updateUserIdEmail(userIdEmailRequestDTO);
             emailService.sendVerifyEmail(requestDTO.getEmail());
 
         }
@@ -211,20 +213,24 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public void delete(String email) {
+    public void delete() {
 
-        Account accountToDelete = accountRepository.findByEmailAndIsDeleted(email, false)
-                .orElseThrow(() -> new UserNotFoundException("The user account does not exist: " + email));
+        String loggedInEmail = keycloakService.getLoggedInUserName();
+
+        Account accountToDelete = accountRepository.findByEmailAndIsDeleted(loggedInEmail, false)
+                .orElseThrow(() -> new UserNotFoundException("The user account does not exist: " + loggedInEmail));
 
         accountToDelete.setEmail(accountToDelete.getEmail() + "-" + accountToDelete.getId());
         accountToDelete.setIsDeleted(true);
 
-        keycloakService.delete(email);
+        keycloakService.delete(loggedInEmail);
 
         try {
             accountRepository.save(accountToDelete);
         } catch (Throwable exception) {
-            throw new UserCanNotBeDeletedException("The user can not be deleted: " + email);
+            log.error(exception.getMessage());
+            exception.printStackTrace();
+            throw new UserCanNotBeDeletedException("The user can not be deleted: " + loggedInEmail);
         }
 
         try {
@@ -232,7 +238,7 @@ public class AccountServiceImpl implements AccountService {
         } catch (Throwable exception) {
             log.error(exception.getMessage());
             exception.printStackTrace();
-            throw new UserIdEmailNotDeletedException("The user id " + accountToDelete.getExternalId() + " and email " + email + " can not be deleted.");
+            throw new UserIdEmailNotDeletedException("The user id " + accountToDelete.getExternalId() + " and email " + loggedInEmail + " can not be deleted.");
         }
 
     }

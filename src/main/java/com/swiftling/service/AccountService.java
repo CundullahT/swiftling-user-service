@@ -19,7 +19,7 @@ public interface AccountService {
 
     AccountDTO update(UpdateAccountRequestDTO requestDTO);
 
-    void delete(String email);
+    void delete();
 
     UUID getExternalIdOfUserAccount();
 

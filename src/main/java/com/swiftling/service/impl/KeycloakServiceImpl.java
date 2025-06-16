@@ -9,6 +9,7 @@ import com.swiftling.service.KeycloakService;
 import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.resource.RealmResource;
+import org.keycloak.admin.client.resource.UserResource;
 import org.keycloak.admin.client.resource.UsersResource;
 import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
@@ -17,6 +18,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Service;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 
@@ -92,17 +95,17 @@ public class KeycloakServiceImpl implements KeycloakService {
     }
 
     @Override
-    public void userUpdate(UpdateAccountRequestDTO requestDTO) {
+    public void userUpdate(String loggedInEmailUsername, UpdateAccountRequestDTO requestDTO) {
 
         try (Keycloak keycloak = getKeycloakInstance()) {
 
             RealmResource realmResource = keycloak.realm(keycloakProperties.getRealm());
             UsersResource usersResource = realmResource.users();
 
-            List<UserRepresentation> userRepresentations = usersResource.search(requestDTO.getEmail());
+            List<UserRepresentation> userRepresentations = usersResource.search(loggedInEmailUsername);
 
             if (userRepresentations.isEmpty()) {
-                throw new UserNotFoundException("The user account does not exist: " + requestDTO.getEmail());
+                throw new UserNotFoundException("The user account does not exist: " + loggedInEmailUsername);
             }
 
             UserRepresentation keycloakUser = userRepresentations.get(0);
@@ -112,6 +115,7 @@ public class KeycloakServiceImpl implements KeycloakService {
             keycloakUser.setEmail(requestDTO.getEmail());
             keycloakUser.setUsername(requestDTO.getEmail());
             keycloakUser.setEmailVerified(false);
+            keycloakUser.setEnabled(false);
 
             usersResource.get(keycloakUser.getId()).update(keycloakUser);
 
@@ -185,6 +189,15 @@ public class KeycloakServiceImpl implements KeycloakService {
             throw new UserCanNotBeDeletedException("The user can not be deleted: " + username);
         }
 
+    }
+
+    @Override
+    public String getLogoutRedirectUrl(String postLogoutRedirectUri) {
+
+        return keycloakProperties.getAuthServerUrl()
+                + "/realms/" + keycloakProperties.getRealm()
+                + "/protocol/openid-connect/logout"
+                + "&post_logout_redirect_uri=" + URLEncoder.encode(postLogoutRedirectUri, StandardCharsets.UTF_8);
     }
 
     private Keycloak getKeycloakInstance() {
