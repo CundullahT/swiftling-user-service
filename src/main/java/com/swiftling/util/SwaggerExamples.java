@@ -22,8 +22,8 @@ public class SwaggerExamples {
             "}";
 
     public static final String CHANGE_PASSWORD_REQUEST_EXAMPLE = "{\n" +
-            "  \"currentPassword\": \"Pa$$w0rd123\"\n" +
-            "  \"newPassword\": \"Pa$$w0rd123\"\n" +
+            "  \"currentPassword\": \"Pa$$w0rd123\",\n" +
+            "  \"newPassword\": \"Pa$$w0rd12345\"\n" +
             "}";
 
     public static final String RESET_PASSWORD_RESPONSE_EXAMPLE = "{\n" +
