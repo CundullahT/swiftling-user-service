@@ -111,6 +111,19 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(exceptionWrapper);
     }
 
+    @ExceptionHandler(AnonymousPersistenceNotAllowedException.class)
+    public ResponseEntity<ExceptionWrapper> handleAnonymousPersistenceNotAllowedException(Throwable exception) {
+        log.error(exception.getMessage());
+        exception.printStackTrace();
+        ExceptionWrapper exceptionWrapper = ExceptionWrapper.builder()
+                .success(false)
+                .message(exception.getMessage())
+                .httpStatus(HttpStatus.FORBIDDEN)
+                .localDateTime(LocalDateTime.now())
+                .build();
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(exceptionWrapper);
+    }
+
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<ExceptionWrapper> handleAccessDeniedException(Throwable exception) {
         log.error(exception.getMessage());

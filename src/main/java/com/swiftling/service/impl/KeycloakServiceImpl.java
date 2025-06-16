@@ -38,14 +38,28 @@ public class KeycloakServiceImpl implements KeycloakService {
 
     @Override
     public String getLoggedInUserName() {
-        Authentication authentication = getAuthentication();
-        Map<String, Object> attributes = ((JwtAuthenticationToken) authentication).getTokenAttributes();
-        return (String) attributes.get("preferred_username");
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication instanceof JwtAuthenticationToken jwtAuth) {
+            return (String) jwtAuth.getTokenAttributes().get("preferred_username");
+        }
+
+        if (authentication instanceof KeycloakAuthenticationToken keycloakAuth) {
+            return keycloakAuth.getName();
+        }
+
+        throw new IllegalStateException("Unsupported authentication type: " + (authentication != null ? authentication.getClass() : "null"));
+
     }
 
     @Override
     public KeycloakAuthenticationToken getAuthentication() {
-        return (KeycloakAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication instanceof KeycloakAuthenticationToken) {
+            return (KeycloakAuthenticationToken) authentication;
+        }
+        return null;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.swiftling.entity;
 
+import com.swiftling.exception.AnonymousPersistenceNotAllowedException;
 import com.swiftling.service.KeycloakService;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
@@ -33,6 +34,9 @@ public class BaseEntityListener {
             baseEntity.setLastUpdateUserId(((UserPrincipal) principal).getId());
 
         } else {
+            if (!((baseEntity instanceof Account) || (baseEntity instanceof Token))) {
+                throw new AnonymousPersistenceNotAllowedException("Anonymous users are only allowed to create user accounts.");
+            }
             baseEntity.setInsertUserId(0L);
             baseEntity.setLastUpdateUserId(0L);
         }

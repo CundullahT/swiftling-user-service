@@ -36,6 +36,8 @@ public class SecurityConfig {
                                 "/swagger-ui.html",
                                 "/v3/api-docs/**",
                                 "/v3/api-docs.yaml",
+                                "/api/v1/account/signup",
+                                "/api/v1/account/enable",
                                 "/login",
                                 "/signup",
                                 "/enable",

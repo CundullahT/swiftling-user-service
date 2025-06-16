@@ -5,15 +5,15 @@ public class SwaggerExamples {
     private SwaggerExamples() {}
     
     public static final String USER_CREATE_REQUEST_EXAMPLE = "{\n" +
-            "  \"firstname\": \"John\",\n" +
-            "  \"lastname\": \"Doe\",\n" +
+            "  \"firstName\": \"John\",\n" +
+            "  \"lastName\": \"Doe\",\n" +
             "  \"email\": \"john.doe@example.com\",\n" +
             "  \"password\": \"Pa$$w0rd123\"\n" +
             "}";
 
     public static final String USER_UPDATE_REQUEST_EXAMPLE = "{\n" +
-            "  \"firstname\": \"John\",\n" +
-            "  \"lastname\": \"Doe\",\n" +
+            "  \"firstName\": \"John\",\n" +
+            "  \"lastName\": \"Doe\",\n" +
             "  \"email\": \"john.doe@example.com\",\n" +
             "}";
 
@@ -50,9 +50,8 @@ public class SwaggerExamples {
             "  \"statusCode\": \"CREATED\",\n" +
             "  \"message\": \"The user account has been signed up successfully.\",\n" +
             "  \"data\": {\n" +
-            "    \"firstname\": \"John\",\n" +
-            "    \"lastname\": \"Doe\",\n" +
-            "    \"username\": \"john.doe\",\n" +
+            "    \"firstName\": \"John\",\n" +
+            "    \"lastName\": \"Doe\",\n" +
             "    \"email\": \"john.doe@example.com\",\n" +
             "    \"enabled\": true,\n" +
             "    \"role\": {\n" +
@@ -66,9 +65,8 @@ public class SwaggerExamples {
             "  \"statusCode\": \"OK\",\n" +
             "  \"message\": \"The regular user is successfully updated.\",\n" +
             "  \"data\": {\n" +
-            "    \"firstname\": \"John\",\n" +
-            "    \"lastname\": \"Doe\",\n" +
-            "    \"username\": \"john.doe\",\n" +
+            "    \"firstName\": \"John\",\n" +
+            "    \"lastName\": \"Doe\",\n" +
             "    \"email\": \"john.doe@example.com\",\n" +
             "    \"enabled\": true,\n" +
             "    \"role\": {\n" +
@@ -88,9 +86,8 @@ public class SwaggerExamples {
             "  \"statusCode\": \"OK\",\n" +
             "  \"message\": \"The regular user is successfully retrieved.\",\n" +
             "  \"data\": {\n" +
-            "    \"firstname\": \"John\",\n" +
-            "    \"lastname\": \"Doe\",\n" +
-            "    \"username\": \"john.doe\",\n" +
+            "    \"firstName\": \"John\",\n" +
+            "    \"lastName\": \"Doe\",\n" +
             "    \"email\": \"john.doe@example.com\",\n" +
             "    \"enabled\": true,\n" +
             "    \"role\": {\n" +

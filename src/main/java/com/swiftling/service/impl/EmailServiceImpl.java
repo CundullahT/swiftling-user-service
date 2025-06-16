@@ -32,7 +32,7 @@ public class EmailServiceImpl implements EmailService {
     private String frontendUrl;
 
     @Override
-    public void sendVerifyEmailAddressEmail(String email) {
+    public void sendVerifyEmail(String email) {
 
         Account account = accountRepository.findByEmail(email)
                 .orElseThrow(() -> new UserNotFoundException("The user account does not exist: " + email));
@@ -44,6 +44,8 @@ public class EmailServiceImpl implements EmailService {
         token.setAccount(account);
         token.setTokenType(TokenType.VERIFICATION);
         token.setExpiryDateTime(LocalDateTime.now().plusDays(1));
+        token.setIsDeleted(false);
+        token.setIsEnabled(true);
 
         tokenRepository.save(token);
 
@@ -98,6 +100,8 @@ public class EmailServiceImpl implements EmailService {
         token.setAccount(account);
         token.setTokenType(TokenType.RESET_PASS);
         token.setExpiryDateTime(LocalDateTime.now().plusHours(1));
+        token.setIsDeleted(false);
+        token.setIsEnabled(true);
 
         tokenRepository.save(token);
 

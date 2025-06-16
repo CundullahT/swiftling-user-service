@@ -14,6 +14,7 @@ import com.swiftling.service.AccountService;
 import com.swiftling.service.EmailService;
 import com.swiftling.service.KeycloakService;
 import com.swiftling.util.MapperUtil;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -69,12 +70,13 @@ public class AccountServiceImpl implements AccountService {
 
         notificationClient.createUserIdEmail(userIdEmailRequestDTO);
 
-        emailService.sendVerifyEmailAddressEmail(savedAccount.getEmail());
+        emailService.sendVerifyEmail(savedAccount.getEmail());
 
         return accountDTO;
 
     }
 
+    @Transactional
     @Override
     public void enable(String token) {
 
@@ -199,7 +201,7 @@ public class AccountServiceImpl implements AccountService {
             userIdEmailRequestDTO.setEmail(requestDTO.getEmail());
 
             notificationClient.createUserIdEmail(userIdEmailRequestDTO);
-            emailService.sendVerifyEmailAddressEmail(requestDTO.getEmail());
+            emailService.sendVerifyEmail(requestDTO.getEmail());
 
         }
 
