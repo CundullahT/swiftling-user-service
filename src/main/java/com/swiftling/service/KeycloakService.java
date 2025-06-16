@@ -2,7 +2,7 @@ package com.swiftling.service;
 
 import com.swiftling.dto.AccountDTO;
 import com.swiftling.dto.UpdateAccountRequestDTO;
-import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 
 public interface KeycloakService {
 
@@ -10,7 +10,7 @@ public interface KeycloakService {
 
     String getLoggedInUserName();
 
-    KeycloakAuthenticationToken getAuthentication();
+    JwtAuthenticationToken getAuthentication();
 
     void userCreate(AccountDTO accountDTO);
 
@@ -21,5 +21,7 @@ public interface KeycloakService {
     void resetUserPassword(String username, String newPassword);
 
     void delete(String username);
+
+    String getLogoutRedirectUrl(String frontendUrl);
 
 }

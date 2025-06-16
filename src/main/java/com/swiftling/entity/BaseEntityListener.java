@@ -4,7 +4,7 @@ import com.swiftling.exception.AnonymousPersistenceNotAllowedException;
 import com.swiftling.service.KeycloakService;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
-import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -21,7 +21,7 @@ public class BaseEntityListener {
     @PrePersist
     private void onPrePersist(BaseEntity baseEntity) {
 
-        KeycloakAuthenticationToken authentication = keycloakService.getAuthentication();
+        JwtAuthenticationToken authentication = keycloakService.getAuthentication();
 
         baseEntity.setInsertDateTime(LocalDateTime.now());
         baseEntity.setLastUpdateDateTime(LocalDateTime.now());
@@ -46,7 +46,7 @@ public class BaseEntityListener {
     @PreUpdate
     private void onPreUpdate(BaseEntity baseEntity) {
 
-        KeycloakAuthenticationToken authentication = keycloakService.getAuthentication();
+        JwtAuthenticationToken authentication = keycloakService.getAuthentication();
 
         baseEntity.setLastUpdateDateTime(LocalDateTime.now());
 

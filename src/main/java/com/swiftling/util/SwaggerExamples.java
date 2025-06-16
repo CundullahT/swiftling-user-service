@@ -22,8 +22,8 @@ public class SwaggerExamples {
             "}";
 
     public static final String CHANGE_PASSWORD_REQUEST_EXAMPLE = "{\n" +
-            "  \"currentPassword\": \"Pa$$w0rd123\"\n" +
-            "  \"newPassword\": \"Pa$$w0rd123\"\n" +
+            "  \"currentPassword\": \"Pa$$w0rd123\",\n" +
+            "  \"newPassword\": \"Pa$$w0rd12345\"\n" +
             "}";
 
     public static final String RESET_PASSWORD_RESPONSE_EXAMPLE = "{\n" +
@@ -74,7 +74,16 @@ public class SwaggerExamples {
             "    }\n" +
             "  }\n" +
             "}";
-    
+
+    public static final String USER_DELETE_RESPONSE_EXAMPLE = "{\n" +
+            "  \"success\": true,\n" +
+            "  \"statusCode\": 200,\n" +
+            "  \"message\": \"The user account has been deleted successfully.\",\n" +
+            "  \"data\": {\n" +
+            "    \"logoutUrl\": \"https://keycloak-host/realms/myrealm/protocol/openid-connect/logout?redirect_uri=https%3A%2F%2Ffrontend-app.com\"\n" +
+            "  }\n" +
+            "}";
+
     public static final String USER_ENABLE_RESPONSE_EXAMPLE = "{\n" +
             "  \"success\": true,\n" +
             "  \"statusCode\": \"OK\",\n" +

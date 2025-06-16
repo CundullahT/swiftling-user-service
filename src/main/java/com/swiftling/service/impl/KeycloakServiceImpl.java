@@ -14,11 +14,13 @@ import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Service;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class KeycloakServiceImpl implements KeycloakService {
@@ -31,9 +33,16 @@ public class KeycloakServiceImpl implements KeycloakService {
 
     @Override
     public String getAccessToken() {
-        KeycloakAuthenticationToken keycloakAuthenticationToken = getAuthentication();
-        return "Bearer " + keycloakAuthenticationToken.getAccount()
-                .getKeycloakSecurityContext().getTokenString();
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication instanceof JwtAuthenticationToken jwtAuthToken) {
+            String tokenValue = jwtAuthToken.getToken().getTokenValue();
+            return "Bearer " + tokenValue;
+        }
+
+        throw new IllegalStateException("Authentication is not of type JwtAuthenticationToken");
+
     }
 
     @Override
@@ -54,12 +63,9 @@ public class KeycloakServiceImpl implements KeycloakService {
     }
 
     @Override
-    public KeycloakAuthenticationToken getAuthentication() {
+    public JwtAuthenticationToken  getAuthentication() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication instanceof KeycloakAuthenticationToken) {
-            return (KeycloakAuthenticationToken) authentication;
-        }
-        return null;
+        return (JwtAuthenticationToken) authentication;
     }
 
     @Override
@@ -185,6 +191,15 @@ public class KeycloakServiceImpl implements KeycloakService {
             throw new UserCanNotBeDeletedException("The user can not be deleted: " + username);
         }
 
+    }
+
+    @Override
+    public String getLogoutRedirectUrl(String postLogoutRedirectUri) {
+
+        return keycloakProperties.getAuthServerUrl()
+                + "/realms/" + keycloakProperties.getRealm()
+                + "/protocol/openid-connect/logout"
+                + "&post_logout_redirect_uri=" + URLEncoder.encode(postLogoutRedirectUri, StandardCharsets.UTF_8);
     }
 
     private Keycloak getKeycloakInstance() {
