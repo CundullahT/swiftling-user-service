@@ -64,9 +64,12 @@ public class KeycloakServiceImpl implements KeycloakService {
     }
 
     @Override
-    public JwtAuthenticationToken  getAuthentication() {
+    public JwtAuthenticationToken getAuthentication() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return (JwtAuthenticationToken) authentication;
+        if (authentication instanceof JwtAuthenticationToken) {
+            return (JwtAuthenticationToken) authentication;
+        }
+        return null;
     }
 
     @Override
