@@ -1,6 +1,8 @@
 package com.swiftling.service.impl;
 
 import com.swiftling.client.NotificationClient;
+import com.swiftling.client.PhraseClient;
+import com.swiftling.client.QuizClient;
 import com.swiftling.dto.AccountDTO;
 import com.swiftling.dto.UpdateAccountRequestDTO;
 import com.swiftling.dto.UserIdEmailRequestDTO;
@@ -33,8 +35,10 @@ public class AccountServiceImpl implements AccountService {
     private final KeycloakService keycloakService;
     private final TokenRepository tokenRepository;
     private final NotificationClient notificationClient;
+    private final PhraseClient phraseClient;
+    private final QuizClient quizClient;
 
-    public AccountServiceImpl(AccountRepository accountRepository, MapperUtil mapperUtil, EmailService emailService, PasswordEncoder passwordEncoder, KeycloakService keycloakService, TokenRepository tokenRepository, NotificationClient notificationClient) {
+    public AccountServiceImpl(AccountRepository accountRepository, MapperUtil mapperUtil, EmailService emailService, PasswordEncoder passwordEncoder, KeycloakService keycloakService, TokenRepository tokenRepository, NotificationClient notificationClient, PhraseClient phraseClient, QuizClient quizClient) {
         this.accountRepository = accountRepository;
         this.mapperUtil = mapperUtil;
         this.emailService = emailService;
@@ -42,6 +46,8 @@ public class AccountServiceImpl implements AccountService {
         this.keycloakService = keycloakService;
         this.tokenRepository = tokenRepository;
         this.notificationClient = notificationClient;
+        this.phraseClient = phraseClient;
+        this.quizClient = quizClient;
     }
 
     @Override
@@ -233,12 +239,45 @@ public class AccountServiceImpl implements AccountService {
             throw new UserCanNotBeDeletedException("The user can not be deleted: " + loggedInEmail);
         }
 
+        deleteUserPhrases(accountToDelete.getExternalId());
+        deleteUserQuizzes(accountToDelete.getExternalId());
+        deleteNotificationUserIdEmail(accountToDelete.getExternalId(), loggedInEmail);
+
+
+    }
+
+    private void deleteUserPhrases(UUID externalId) {
+
         try {
-            notificationClient.deleteUserIdEmail(accountToDelete.getExternalId());
+            phraseClient.deleteUserPhrases(externalId);
         } catch (Throwable exception) {
             log.error(exception.getMessage());
             exception.printStackTrace();
-            throw new UserIdEmailNotDeletedException("The user id " + accountToDelete.getExternalId() + " and email " + loggedInEmail + " can not be deleted.");
+            throw new UserPhrasesNotDeletedException("The phrases of the user (" + externalId + ") can not be deleted.");
+        }
+
+    }
+
+    private void deleteUserQuizzes(UUID externalId) {
+
+        try {
+            quizClient.deleteUserQuizzes(externalId);
+        } catch (Throwable exception) {
+            log.error(exception.getMessage());
+            exception.printStackTrace();
+            throw new UserQuizzesNotDeletedException("The quizzes of the user (" + externalId + ") can not be deleted.");
+        }
+
+    }
+
+    private void deleteNotificationUserIdEmail(UUID externalId, String loggedInEmail) {
+
+        try {
+            notificationClient.deleteUserIdEmail(externalId);
+        } catch (Throwable exception) {
+            log.error(exception.getMessage());
+            exception.printStackTrace();
+            throw new UserIdEmailNotDeletedException("The user id " + externalId + " and email " + loggedInEmail + " can not be deleted.");
         }
 
     }

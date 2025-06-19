@@ -98,8 +98,8 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(exceptionWrapper);
     }
 
-    @ExceptionHandler(UserIdEmailNotDeletedException.class)
-    public ResponseEntity<ExceptionWrapper> handleUserIdEmailNotDeletedException(Throwable exception) {
+    @ExceptionHandler({UserIdEmailNotDeletedException.class, UserPhrasesNotDeletedException.class, UserQuizzesNotDeletedException.class})
+    public ResponseEntity<ExceptionWrapper> handleClientNotDeletedExceptions(Throwable exception) {
         log.error(exception.getMessage());
         exception.printStackTrace();
         ExceptionWrapper exceptionWrapper = ExceptionWrapper.builder()
