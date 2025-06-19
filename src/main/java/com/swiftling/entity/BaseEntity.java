@@ -20,12 +20,8 @@ public class BaseEntity {
 
     @Column(updatable = false, nullable = false)
     private LocalDateTime insertDateTime;
-    @Column(updatable = false, nullable = false)
-    private Long insertUserId;
     @Column(nullable = false)
     private LocalDateTime lastUpdateDateTime;
-    @Column(nullable = false)
-    private Long lastUpdateUserId;
 
     @Column(nullable = false)
     private Boolean isDeleted;
