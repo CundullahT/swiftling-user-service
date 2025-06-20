@@ -171,20 +171,23 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public void sendEmailChangeConfirmationToNewEmail(String newEmail) {
+    public void sendAccountDeletedEmail(String email) {
 
-        String subject = "Your email change has been confirmed";
+        String subject = "Your account has been deleted";
         String content = String.format("""
-            Hello,
-            
-            This is a confirmation that your email address has been successfully updated
-            and is now associated with your SwiftLing account.
-            
-            Regards,
-            The SwiftLing Team
-            """);
+        Hello,
+        
+        This is a confirmation that your SwiftLing account has been permanently deleted.
+        
+        If you requested this deletion, no further action is required.
+        If you did not initiate this deletion, please contact support immediately.
+        You can reach out to the support team by using this email address: %s
+        
+        Regards,
+        The SwiftLing Team
+        """, getSupportEmailAddress());
 
-        sendEmail(newEmail, subject, content);
+        sendEmail(email, subject, content);
 
     }
 

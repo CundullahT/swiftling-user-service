@@ -11,6 +11,6 @@ import java.util.UUID;
 public interface PhraseClient {
 
     @DeleteMapping("/api/v1/phrase/delete-all-user-phrases")
-    ResponseEntity<Void> deleteUserPhrases(@RequestParam UUID externalOwnerUserAccountId);
+    ResponseEntity<Void> deleteUserPhrases(@RequestParam(value = "external-user-id", required = true) UUID externalOwnerUserAccountId);
 
 }

@@ -63,7 +63,7 @@ public class SwaggerExamples {
     public static final String USER_UPDATE_RESPONSE_EXAMPLE = "{\n" +
             "  \"success\": true,\n" +
             "  \"statusCode\": \"OK\",\n" +
-            "  \"message\": \"The regular user is successfully updated.\",\n" +
+            "  \"message\": \"The user account has been updated successfully.\",\n" +
             "  \"data\": {\n" +
             "    \"firstName\": \"John\",\n" +
             "    \"lastName\": \"Doe\",\n" +
@@ -90,21 +90,6 @@ public class SwaggerExamples {
             "  \"message\": \"The user account has been enabled successfully.\"\n" +
             "}";
     
-    public static final String USER_GET_RESPONSE_SINGLE_EXAMPLE = "{\n" +
-            "  \"success\": true,\n" +
-            "  \"statusCode\": \"OK\",\n" +
-            "  \"message\": \"The regular user is successfully retrieved.\",\n" +
-            "  \"data\": {\n" +
-            "    \"firstName\": \"John\",\n" +
-            "    \"lastName\": \"Doe\",\n" +
-            "    \"email\": \"john.doe@example.com\",\n" +
-            "    \"enabled\": true,\n" +
-            "    \"role\": {\n" +
-            "      \"description\": \"User\"\n" +
-            "    }\n" +
-            "  }\n" +
-            "}";
-    
     public static final String ACCESS_DENIED_FORBIDDEN_RESPONSE_EXAMPLE = "{\n" +
             "  \"success\": false,\n" +
             "  \"message\": \"Access is denied\",\n" +
@@ -127,7 +112,7 @@ public class SwaggerExamples {
     
     public static final String USER_NOT_FOUND_RESPONSE_EXAMPLE = "{\n" +
             "  \"success\": false,\n" +
-            "  \"message\": \"The user account does not exist: + sample@email.com\",\n" +
+            "  \"message\": \"The user account does not exist: sample@email.com\",\n" +
             "  \"httpStatus\": \"NOT_FOUND\",\n" +
             "  \"localDateTime\": \"2024-01-01T00:00:00.0000000\"\n" +
             "}";
@@ -155,7 +140,7 @@ public class SwaggerExamples {
 
     public static final String USER_NOT_DELETED_RESPONSE_EXAMPLE = "{\n" +
             "  \"success\": false,\n" +
-            "  \"message\": \"The user can not be deleted: + sample@email.com\",\n" +
+            "  \"message\": \"The user can not be deleted: sample@email.com\",\n" +
             "  \"httpStatus\": \"CONFLICT\",\n" +
             "  \"localDateTime\": \"2024-01-01T00:00:00.0000000\"\n" +
             "}";

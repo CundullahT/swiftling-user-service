@@ -226,6 +226,10 @@ public class AccountServiceImpl implements AccountService {
         Account accountToDelete = accountRepository.findByEmailAndIsDeleted(loggedInEmail, false)
                 .orElseThrow(() -> new UserNotFoundException("The user account does not exist: " + loggedInEmail));
 
+        deleteUserPhrases(accountToDelete.getExternalId());
+        deleteUserQuizzes(accountToDelete.getExternalId());
+        deleteNotificationUserIdEmail(accountToDelete.getExternalId(), loggedInEmail);
+
         accountToDelete.setEmail(accountToDelete.getEmail() + "-" + accountToDelete.getId());
         accountToDelete.setIsDeleted(true);
 
@@ -239,10 +243,7 @@ public class AccountServiceImpl implements AccountService {
             throw new UserCanNotBeDeletedException("The user can not be deleted: " + loggedInEmail);
         }
 
-        deleteUserPhrases(accountToDelete.getExternalId());
-        deleteUserQuizzes(accountToDelete.getExternalId());
-        deleteNotificationUserIdEmail(accountToDelete.getExternalId(), loggedInEmail);
-
+        emailService.sendAccountDeletedEmail(loggedInEmail);
 
     }
 

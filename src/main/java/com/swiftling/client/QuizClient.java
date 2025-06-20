@@ -10,7 +10,7 @@ import java.util.UUID;
 @FeignClient(value = "swiftling-quiz-service")
 public interface QuizClient {
 
-    @DeleteMapping("/api/v1/phrase/delete-all-user-quizzes")
-    ResponseEntity<Void> deleteUserQuizzes(@RequestParam UUID externalOwnerUserAccountId);
+    @DeleteMapping("/api/v1/quiz/delete-all-user-quizzes")
+    ResponseEntity<Void> deleteUserQuizzes(@RequestParam(value = "external-user-id", required = true) UUID externalOwnerUserAccountId);
 
 }

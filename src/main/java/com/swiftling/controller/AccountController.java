@@ -166,7 +166,7 @@ public class AccountController {
     }
 
     @PostMapping("/change-pass")
-    @Operation(summary = "Change the password of an existing user account.",
+    @Operation(summary = "Change the password of the logged in user account.",
             requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ChangePasswordRequestDTO.class),
                             examples = @ExampleObject(value = SwaggerExamples.CHANGE_PASSWORD_REQUEST_EXAMPLE))))
@@ -192,7 +192,7 @@ public class AccountController {
     }
 
     @PatchMapping("/update-account")
-    @Operation(summary = "Update an existing user account.",
+    @Operation(summary = "Update the logged in user account.",
             requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = UpdateAccountRequestDTO.class),
                             examples = @ExampleObject(value = SwaggerExamples.USER_UPDATE_REQUEST_EXAMPLE))))
@@ -223,7 +223,7 @@ public class AccountController {
     }
 
     @DeleteMapping("/delete-account")
-    @Operation(summary = "Delete an existing user account.")
+    @Operation(summary = "Delete the logged in user account.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "The user account has been deleted successfully.",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseWrapper.class),
@@ -256,7 +256,7 @@ public class AccountController {
     }
 
     @GetMapping("/get-external-id")
-    @Operation(summary = "Get the external id of an existing user account.")
+    @Operation(summary = "Get the external id of the logged in user account.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "The external id of the logged in user account has been retrieved successfully.",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseWrapper.class),
