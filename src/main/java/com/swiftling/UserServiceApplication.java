@@ -28,7 +28,7 @@ public class UserServiceApplication {
         String domain = System.getenv().get("SWIFTLING_HOSTNAME");
 
         //TODO Use real domain when it is available
-        String hostOrIp = env.equalsIgnoreCase("local") ? "localhost" : env.equalsIgnoreCase("prod") ? domain : getPublicIP();
+        String hostOrIp = env.equalsIgnoreCase("local") ? "localhost" : env.equalsIgnoreCase("prod") ? domain : env.equalsIgnoreCase("dev") ? "cundi.onthewifi.com" : getPublicIP();
 
         defaultProperties.put("host.name-or-ip", hostOrIp);
 
