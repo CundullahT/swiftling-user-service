@@ -14,9 +14,9 @@ public interface NotificationClient {
     ResponseEntity<UserIdEmailRequestDTO> createUserIdEmail(@RequestBody UserIdEmailRequestDTO userIdEmailRequestDTO);
 
     @PutMapping("/api/v1/user-id-email")
-    ResponseEntity<UserIdEmailRequestDTO> updateUserIdEmail(@RequestBody UserIdEmailRequestDTO userIdEmailRequestDTO);
+    ResponseEntity<UserIdEmailRequestDTO> updateUserIdEmail(@RequestHeader("Authorization") String authToken, @RequestBody UserIdEmailRequestDTO userIdEmailRequestDTO);
 
     @DeleteMapping("/api/v1/user-id-email")
-    ResponseEntity<UserIdEmailRequestDTO> deleteUserIdEmail(@RequestParam(value = "externalId", required = true) UUID externalId);
+    ResponseEntity<UserIdEmailRequestDTO> deleteUserIdEmail(@RequestHeader("Authorization") String authToken, @RequestParam(value = "externalId", required = true) UUID externalId);
 
 }

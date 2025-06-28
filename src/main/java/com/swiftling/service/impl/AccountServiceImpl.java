@@ -209,7 +209,7 @@ public class AccountServiceImpl implements AccountService {
             userIdEmailRequestDTO.setExternalId(savedAccount.getExternalId());
             userIdEmailRequestDTO.setEmail(requestDTO.getEmail());
 
-            notificationClient.updateUserIdEmail(userIdEmailRequestDTO);
+            notificationClient.updateUserIdEmail(keycloakService.getAccessToken(), userIdEmailRequestDTO);
             emailService.sendVerifyEmail(requestDTO.getEmail());
 
         }
@@ -250,7 +250,7 @@ public class AccountServiceImpl implements AccountService {
     private void deleteUserPhrases(UUID externalId) {
 
         try {
-            phraseClient.deleteUserPhrases(externalId);
+            phraseClient.deleteUserPhrases(keycloakService.getAccessToken(), externalId);
         } catch (Throwable exception) {
             log.error(exception.getMessage());
             exception.printStackTrace();
@@ -262,7 +262,7 @@ public class AccountServiceImpl implements AccountService {
     private void deleteUserQuizzes(UUID externalId) {
 
         try {
-            quizClient.deleteUserQuizzes(externalId);
+            quizClient.deleteUserQuizzes(keycloakService.getAccessToken(), externalId);
         } catch (Throwable exception) {
             log.error(exception.getMessage());
             exception.printStackTrace();
@@ -274,7 +274,7 @@ public class AccountServiceImpl implements AccountService {
     private void deleteNotificationUserIdEmail(UUID externalId, String loggedInEmail) {
 
         try {
-            notificationClient.deleteUserIdEmail(externalId);
+            notificationClient.deleteUserIdEmail(keycloakService.getAccessToken(), externalId);
         } catch (Throwable exception) {
             log.error(exception.getMessage());
             exception.printStackTrace();
