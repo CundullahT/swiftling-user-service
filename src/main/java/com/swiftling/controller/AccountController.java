@@ -27,7 +27,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @RestController
-@CrossOrigin({"http://localhost:8762", "http://localhost:5000", "http://swiftling-frontend:5000", "https://swiftlingapp.com"})
+@CrossOrigin({"http://localhost:8762", "http://cundi.onthewifi.com:8762", "http://localhost:5000", "http://cundi.onthewifi.com:5000", "https://swiftlingapp.com", "https://www.swiftlingapp.com"})
 @RequestMapping("/api/v1/account")
 public class AccountController {
 
