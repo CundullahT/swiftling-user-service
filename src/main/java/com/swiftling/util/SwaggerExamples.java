@@ -52,11 +52,7 @@ public class SwaggerExamples {
             "  \"data\": {\n" +
             "    \"firstName\": \"John\",\n" +
             "    \"lastName\": \"Doe\",\n" +
-            "    \"email\": \"john.doe@example.com\",\n" +
-            "    \"enabled\": true,\n" +
-            "    \"role\": {\n" +
-            "      \"description\": \"User\"\n" +
-            "    }\n" +
+            "    \"email\": \"john.doe@example.com\"\n" +
             "  }\n" +
             "}";
 
@@ -65,13 +61,10 @@ public class SwaggerExamples {
             "  \"statusCode\": \"OK\",\n" +
             "  \"message\": \"The user account has been updated successfully.\",\n" +
             "  \"data\": {\n" +
+            "    \"externalId\": \"a18aa00a-0a4b-4d1f-ba40-ae1001428c32\",\n" +
             "    \"firstName\": \"John\",\n" +
             "    \"lastName\": \"Doe\",\n" +
-            "    \"email\": \"john.doe@example.com\",\n" +
-            "    \"enabled\": true,\n" +
-            "    \"role\": {\n" +
-            "      \"description\": \"User\"\n" +
-            "    }\n" +
+            "    \"email\": \"john.doe@example.com\"\n" +
             "  }\n" +
             "}";
 
