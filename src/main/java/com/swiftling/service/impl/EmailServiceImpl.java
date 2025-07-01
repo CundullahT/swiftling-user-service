@@ -49,7 +49,7 @@ public class EmailServiceImpl implements EmailService {
 
         tokenRepository.save(token);
 
-        String verifyLink = frontendUrl + "/auth/verify?token=" + tokenStr;
+        String verifyLink = frontendUrl + "/auth/verify-sign-up?token=" + tokenStr;
 
         String subject = "Verify your email address";
         String content = String.format("""
@@ -105,7 +105,7 @@ public class EmailServiceImpl implements EmailService {
 
         tokenRepository.save(token);
 
-        String resetLink = frontendUrl + "/auth/forgot-password?token=" + tokenStr;
+        String resetLink = frontendUrl + "/auth/verify-pass-change?token=" + tokenStr;
 
         String subject = "Reset your password";
         String content = String.format("""
