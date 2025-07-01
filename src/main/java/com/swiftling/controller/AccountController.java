@@ -225,7 +225,7 @@ public class AccountController {
     @DeleteMapping("/delete-account")
     @Operation(summary = "Delete the logged in user account.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "204", description = "The user account has been deleted successfully.",
+            @ApiResponse(responseCode = "200", description = "The user account has been deleted successfully.",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseWrapper.class),
                             examples = @ExampleObject(value = SwaggerExamples.USER_DELETE_RESPONSE_EXAMPLE))),
             @ApiResponse(responseCode = "404", description = "The user account does not exist: + sample@email.com",
